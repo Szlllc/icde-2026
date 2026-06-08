@@ -1,0 +1,175 @@
+[
+    {
+        "id": 2,
+        "title": "StreamShield: A Production-Proven Resiliency Solution for Apache Flink at ByteDance",
+        "recommendation": 3,
+        "authors": "Yong Fang, Yuxing Han, Meng Wang, Yifan Zhang, Yue Ma, Chi Zhang",
+        "affiliation": "ByteDance",
+        "abstract": "大规模流处理集群面临硬件故障与复杂外部依赖时，常导致作业频繁重启。面对这一挑战，该研究提出了StreamShield弹性恢复方案。在架构底层，该系统包含两大核心机制：1）运行期优化机制：引入反压洗牌策略与动态并行度调节，平衡数据分布并优化资源占用；2）细粒度容错机制：利用区域检查点隔离局部故障，配合单任务恢复减少算子干扰，以此缩短恢复耗时。进一步地，该系统已在ByteDance生产环境中落地验证。在Nexmark测试集与数据同步场景下，它将大规模资源分配开销降低了50%以上，并将检查点成功率提升至93.5%，保障了业务稳定性。",
+        "link": "https://arxiv.org/pdf/2602.03189",
+        "tags": ["distributed stream processing", "resiliency", "runtime optimization", "replication strategy", "high availability"]
+    },
+    {
+        "id": 4,
+        "title": "Building an OceanBase-based Distributed Nearly Real-time Analytical Processing Database System",
+        "recommendation": 5,
+        "authors": "Quanqing Xu, Chuanhui Yang, Ruijie Li, Dongdong Xie, Hui Cao, Yi Xiao, Junquan Chen, Yanzuo Wang, Saitong Zhao, Fusheng Han",
+        "affiliation": "OceanBase, Ant Group",
+        "abstract": "传统系统存在数据冗余与低效瓶颈 。面对挑战，该研究提出分布式数据库OceanBase Mercury 。其底层创新为：1）混合存储：基线数据列存且增量数据行存以保障事务性能 ；2）跳跃索引：融入SSTable结构以实现多分辨率动态剪裁 ；3）向量化引擎：通过三种数据格式优化算子并降低开销 。测试表明，该系统在TPC-H与ClickBench中查询延迟较低 ，目前已在公有云落地 。（开源链接：[https://github.com/oceanbase/oceanbase/tree/4.3.3](https://github.com/oceanbase/oceanbase/tree/4.3.3)）",
+        "link": "https://arxiv.org/pdf/2602.07584",
+        "tags": ["HTAP", "OLAP", "hybrid storage", "materialized views", "vectorized engine", "distributed database"]
+    },
+    {
+        "id": 5,
+        "title": "High-Fidelity and Complex Test Data Generation for Google SQL Code Generation Services",
+        "recommendation": 5,
+        "authors": "Yeounoh Chung, Shivasankari Kannan, Amita Gondi, Tristan Swadell, Fatma Ozcan",
+        "affiliation": "Google",
+        "abstract": "工业级SQL代码生成服务受限于数据隐私 ，传统方法难以为深层嵌套结构构建具语义相干性的测试数据 。为此，该研究提出基于大模型的冷启动测试数据生成流水线 。在架构底层，该系统包含三大核心机制：1）预处理解耦机制：解析SQL并提取谓词约束 ，将复杂查询分解为单表原子目标以实现并行生成 ；2）后处理重写机制：通过直接值替换同步跨表连接键 ，在不增加模型调用开销的前提下确保多表连接一致性 ；3）双阶段验证机制：结合静态解析与大模型裁判进行语义合规检查及错误重试 。该方法在Google Ads生产表与DeepJSONEval基准测试中进行了落地验证 ，使NL2SQL测试覆盖率提升69.59%，准确率提升20.4% 。",
+        "link": "https://arxiv.org/pdf/2504.17203",
+        "tags": ["large language models", "synthetic data generation", "SQL code generation", "nested data structures"]
+    },
+    {
+        "id": 9,
+        "title": "",
+        "recommendation": 5,
+        "authors": "",
+        "affiliation": "",
+        "abstract": "",
+        "link": "",
+        "tags": ["", "", ""]
+    },  
+    {
+        "id": 10,
+        "title": "REVISION: Reflective Intent Mining and Online Reasoning Auxiliary for E-commerce Visual Search System Optimization",
+        "recommendation": 3,
+        "authors": "Yiwen Tang, Qiuyu Zhao, Zenghui Sun, Jinsong Lan, Xiaoyong Zhu, Bo Zheng",
+        "affiliation": "Shanghai AI Laboratory, Alibaba",
+        "abstract": "传统电商图像搜索因难以挖掘隐式意图，常导致无点击与意图错配。面对这一挑战，该研究提出REVISION框架，打破了传统图像硬匹配的局限。在架构底层，系统包含两大核心机制：1）离线挖掘机制，定期从历史无点击日志中推理意图并生成信号，通过层次聚类扩充工具链，解决了海量日志难以挖掘的瓶颈；2）在线推理机制，训练模型实时分析图像与历史结果，动态调度工具链进行自适应优化，缓解了请求意图的歧义。目前该系统已在淘宝落地验证。在线测试表明，在触发子集中，系统将无点击率降低13.91%，同时点击率与GMV均提升10.73%。",
+        "link": "https://arxiv.org/pdf/2510.22739",
+        "tags": ["Large Model", "Intent Mining", "Visual Search System"]
+    },
+    {
+        "id": 11,
+        "title": "DBdoctor: A Fine-grained and Non-intrusive Performance Diagnosis Platform for Databases",
+        "recommendation": 5,
+        "authors": "Xinyue Shi,  Quanqi Xin, Zhengjin Wang, Xinyi Zhang, Haoqiong Bian, Wei Lu, Qiyu Zhuang, Shuang Liu, Jikuan Zhang, Xiang Zheng, Yunpeng Chai, Xiaoyong Du",
+        "affiliation": "Renmin University of China, Juhaokan Technology",
+        "abstract": "在数据库性能诊断中，传统监控常陷于低开销与高精度两难，且缺失内部执行上下文使问题定位往往沦为黑盒。为此，本文创新性地提出了一种细粒度、非侵入式的白盒诊断平台。该研究巧妙借助eBPF技术，在系统内核与数据库层进行事件驱动的精准采集，并凭自适应探针将运行开销降至极低。其核心架构突破在于，能把海量的底层eBPF事件无缝重构为SQL级时序资源指标与依赖图谱，彻底打通了从SQL执行计划解释到硬件资源消耗的追踪链路。这不仅在实际生产环境中实现了异常根因SQL的高效精准捕获，更为现代数据库底层的智能化运维与性能调优提供了极具工业落地价值的新范式。",
+        "link": "https://mp.weixin.qq.com/s/jKMxXGyFAVwbd6RRXpYlnA",
+        "tags": ["DBdoctor", "eBPF", "RootCauseAnalysis"]
+    },  
+  
+    {
+        "id": 12,
+        "title": "CCD–Level and Load-Aware Thread Orchestration for In-Memory Vector ANNS on Multi-Core CPUs",
+        "recommendation": 4,
+        "authors": "Yuchen Huang, Baiteng Ma, Yiping Sun, Yang Shi, Xiao Chen, Xiaocheng Zhong, Zhiyong Wang, Yao Hu, Chuliang Weng",
+        "affiliation": "East China Normal University, Xiaohongshu Inc",
+        "abstract": "多核CCD架构下，内存向量检索常因忽视芯片列特性导致L3缓存污染与负载失衡。**为此**，该研究提出CCD级负载感知线程编排框架。**在架构底层**，该框架包含三大机制：**1)统一接口**：抽象跨查询HNSW与查询内IVF，降低迁移成本；**2)感知调度**：冷热配对映射流量至特定CCD，提高缓存利用率；**3)拓扑窃取**：优先进行同CCD内任务窃取，减少跨芯片列搬移引起的缓存失效。**进一步地**，该框架在小红书搜索与推荐等业务中落地，使吞吐量提升至多3.7倍，延迟降低30%至90%，目前在线上稳定运行。",
+        "link": "https://arxiv.org/pdf/2605.10090",
+        "tags": ["Multi-core architecture", "Vector search", "Thread orchestration"]
+    },
+  
+    {
+        "id": 14,
+        "title": "Graph Query Generation with Constraint-guided Large Language Agents",
+        "recommendation": 3,
+        "authors": "Mengying Wang, Nicolaas Jedema, Rahul Pandey, RaviKiran Krishnan, Jens Lehmann, Yinghui Wu",
+        "affiliation": "Case Western Reserve University, Amazon, Meta",
+        "abstract": "现有的知识图谱问答架构面临图模型与查询语言锁定的局限 。为此，该研究提出了免训练、无模式的统一图查询生成框架UniQGen 。在架构底层，该框架包含两大核心机制 ：1）不确定性约束表构建机制，动态提取上下文事实并量化评分，解决了模式错配与意图对齐问题 ；2）双向追溯循环优化机制，通过自顶向下松弛约束保障完备性 ，再自底向上收紧约束以实现语义准确与极简化 。相比之下，该设计有效解耦了对特定图模式的依赖 。评测表明，该框架在GraphQ和GrailQA基准测试中分别取得31.6%和4.9%的F1值提升 ，并在Amazon Neptune环境下验证了高并发扩展性 。",
+        "link": "https://arxiv.org/pdf/2605.00845",
+        "tags": ["query generation", "knowledge graph", "question answering", "large language agents"]
+    },
+    {
+        "id": 16,
+        "title": "",
+        "recommendation": 3,
+        "authors": "",
+        "affiliation": "",
+        "abstract": "",
+        "link": "",
+        "tags": ["", "", ""]
+    },  
+    {
+        "id": 18,
+        "title": "KScaNN: Scalable Approximate Nearest Neighbor Search on Kunpeng",
+        "recommendation": 3,
+        "authors": "Oleg Senkevich, Siyang Xu, Tianyi Jiang, Alexander Radionov, Jan Tabaszewski, Dmitriy Malyshev, Zijian Li, Daihao Xue, Licheng Yu, Weidi Zeng, Meiling Wang, Xin Yao, Siyu Huang, Gleb Neshchetkin, Qiuling Pan, Yaoyao Fu",
+        "affiliation": "Huawei Technologies Ltd, Higher School of Economics",
+        "abstract": "将x86下的最近邻搜索算法直接移植到ARM平台常面临性能劣化。为此，该研究提出基于鲲鹏920软硬件协同设计的算法KScaNN 。在架构底层，该研究引入三项创新：1）自适应模块，利用机器学习动态预测探测深度与候选池大小以规避计算冗余 ；2）定制SIMD内核，重构数据布局并拼接寄存器优化NEON与SVE指令以加速距离计算 ；3）混合簇内搜索，在叶节点集成图索引以平衡图遍历与全扫描 。在GIST、DEEP10M等数据集下的评测表明，该算法相比顶配x86基线取得1.06至1.63倍的吞吐量提升 ，目前已在通用ARM生态中完成验证 。",
+        "link": "https://arxiv.org/pdf/2511.03298",
+        "tags": ["vector retrieval", "ARM architecture", "approximate nearest neighbor search"]
+    },
+  {
+        "id": 27,
+        "title": "OpenZL: Using Graphs to Compress Smaller and Faster",
+        "recommendation": 4,
+        "authors": "Yann Collet, Nick Terrell, Winston Felix Handte, Danielle Rozenblit, Victor Zhang, Kevin Zhang, Yaelle Goldschlag, Jennifer Lee, Elliot Gorokhovsky, Yonatan Komornik, Daniel Riegel, Stan Angelov, Nadav Rotem",
+        "affiliation": "Meta",
+        "abstract": "在过去几十年中，研究技术通过显著增加处理时间来提高无损压缩率。然而，这些技术在工业界并未普及，因为生产系统需要高吞吐量和低资源利用率。相反，现实中压缩技术的改进越来越多地通过构建应用特定的压缩器来实现，这些压缩器可以利用被压缩数据的结构和语义知识。应用特定压缩器系统的性能甚至优于最好的通用压缩器，但这些技术存在严重缺陷——适用性有限、开发困难、维护和部署也具有挑战性。本文提出了一种新的压缩策略来克服这些问题。提出了压缩的图模型（graph model），一种将压缩表示为模块化编解码器有向无环图的新理论框架。OpenZL 实现了该框架，将数据压缩为自描述的线格式，任何配置都可以通过通用解码器进行解压。OpenZL 的设计使得开发者可以用最少的代码快速开发应用特定压缩器。实验结果表明，OpenZL 在多种真实世界数据集上，与最先进的通用压缩器相比，实现了更优的压缩率和速度。与专注于压缩率的深度学习压缩器相比，OpenZL 在压缩率上具有竞争力，同时速度快了数个数量级。在 Meta 的内部部署中，也显示出在大小和/或速度方面的一致性改进，开发时间从数月缩短到数天。OpenZL 开源链接：https://github.com/facebook/openzl",
+        "link": "https://arxiv.org/pdf/2605.09928",
+        "tags": ["数据压缩", "数据模型", "数据库管理", "异构数据库", "训练"]
+  }, 
+  {
+        "id": 28,
+        "title": "",
+        "recommendation": 3,
+        "authors": "",
+        "affiliation": "",
+        "abstract": "",
+        "link": "",
+        "tags": ["", "", ""]
+    },  
+    {
+        "id": 30,
+        "title": "",
+        "recommendation": 3,
+        "authors": "",
+        "affiliation": "",
+        "abstract": "",
+        "link": "",
+        "tags": ["", "", ""]
+    }, 
+     {
+        "id": 33,
+        "title": "",
+        "recommendation": 4,
+        "authors": "",
+        "affiliation": "",
+        "abstract": "",
+        "link": "",
+        "tags": ["", "", ""]
+    }, 
+ 
+  {
+        "id": 35,
+        "title": "DM-RAG: Enhancing User Support in Dameng Databases with Retrieval-Augmented Generation",
+        "recommendation": 5,
+        "authors": "Qiang Huang, Ke Liu, Liang Deng, Sijing Zhang, Chuang Hu, Tieyun Qian, Xiao Yan, Jiawei Jiang",
+        "affiliation": "Wuhan University（武汉大学）, Wuhan Dameng Database Co., Ltd（武汉达梦数据库有限公司）",
+        "abstract": "检索增强生成（RAG）通过检索相关的、最新的事实信息并将其融入生成过程，整合外部知识库以缓解大语言模型（LLM）的幻觉问题。然而，由于数据库文档具有层次化、元数据丰富的特点，且用户查询往往模糊、面向专家级数据库知识，将 RAG 适配到数据库系统仍面临挑战。本文提出了 DM-RAG，一种专为达梦数据库系统定制的 RAG 框架，用于辅助数据库管理任务。首先，DM-RAG 采用基于元信息的层次化分块策略，以保持结构完整性和上下文连贯性。其次，利用领域特定的微调和轻量级基于词表的查询改写，将模糊查询与专家知识对齐。最后，检索流水线结合元信息驱动的排序验证来优化检索结果，并将层次化索引与上下文增强相结合，在保持上下文完整性的同时提高答案准确性。实验表明，DM-RAG 超越了强 RAG 基线方法，在多个评估指标上生成质量平均提升达 14.31%。用户研究报告满意度评分为 3.55/4，用户偏好率为 81.80%，问题解决效率提升 5.20 倍。达梦语料库公开链接：https://github.com/johnnyhuangcs/Dameng_Corpus。",
+        "link": "",
+        "tags": ["检索增强生成", "数据库管理系统", "数据库系统"]
+  },
+  {
+        "id": 36,
+        "title": "Relevance Matters: A Multi-Task and Multi-Stage Large Language Model Approach for E-commerce Query Rewriting",
+        "recommendation": 4,
+        "authors": "Aijun Dai, Jixiang Zhang, Haiqing Hu, Guoyu Tang, Lin Liu, Ziguang Cheng",
+        "affiliation": "Jingdong（京东）, Tsinghua University（清华大学）",
+        "abstract": "在电商搜索中，用户体验通过用户对返回商品的行为反应（如点击率和转化率）以及返回商品与搜索查询之间的相关性来衡量。因此，相关性和用户转化构成了查询改写（query rewriting）的两个主要目标，查询改写是一种弥合用户表达与商品描述之间词汇差距的策略。本文提出了一种基于大语言模型（LLM）的多任务多阶段查询改写框架。与以往主要关注改写查询生成的工作不同，本文将相关性任务注入查询改写中。具体而言，利用在京东用户数据和商品信息上预训练的模型，该方法首先进行多任务监督微调（SFT），包括改写查询生成任务和查询与改写之间的相关性标注任务。随后，采用组相对策略优化（GRPO）进行模型的目标对齐，以增强相关性并促进用户转化。通过离线评估和在线 A/B 测试，该框架在电商查询改写效果方面展现了显著提升，提高了搜索结果的相关性并增加了每用户购买数（UCVR）。自 2025 年 8 月起，该方法已部署在京东这一中国领先在线购物平台上。",
+        "link": "https://arxiv.org/pdf/2603.02555",
+        "tags": ["查询改写", "电商搜索", "大语言模型"]
+  },
+  {
+        "id": 37,
+        "title": "Bala-Join: An Adaptive Hash Join for Balancing Communication and Computation in Geo-Distributed SQL Databases",
+        "recommendation": 4,
+        "authors": "Wenlong Song, Hui Li, Bingying Zhai, Jinxin Yang, Pinghui Wang, Luming Sun, Ming Li, Jiangtao Cui",
+        "affiliation": "Xidian University（西安电子科技大学）, Xi'an Jiaotong University（西安交通大学）, Yunxi Technology Company Ltd.（云希科技有限公司）, Shandong Inspur Database Technology Company Ltd.（山东浪潮数据库技术有限公司）",
+        "abstract": "无共享架构的地理分布式 SQL 数据库（如 CockroachDB）对于需要数据弹性和本地性的企业应用越来越重要。然而，在实际客户场景中，当部署跨越广域网（WAN）的多个数据中心时，出现了显著的性能下降。经排查发现，性能瓶颈在于分布式哈希连接（Dist-HJ）算法，其性能依赖于通信开销与计算负载之间的关键平衡。当处理来自真实客户负载的倾斜数据时，这种平衡被严重破坏，导致性能下降。为应对这一挑战，本文提出了 Bala-Join，一种自适应解决方案，用于平衡 Dist-HJ 执行中的计算和网络负载。该方法包含平衡分区与部分复制（BPPR）算法和分布式在线倾斜连接键检测器。前者通过组播机制实现倾斜数据的平衡重分布，以提升计算性能并降低网络开销；后者为 BPPR 提供实时的倾斜连接键信息。此外，还引入了主动信令与异步拉取（ASAP）机制，在检测器和重分布过程之间实现高效、实时的同步，且开销极低。实验研究表明，Bala-Join 优于主流的 Dist-HJ 方案，吞吐量提升 25%-61%。",
+        "link": "https://arxiv.org/pdf/2603.05405",
+        "tags": ["分布式哈希连接", "无共享架构", "数据倾斜"]
+  }
+]

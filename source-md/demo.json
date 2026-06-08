@@ -1,0 +1,82 @@
+[ 
+  {
+    "id": 1,
+    "title": "BClean+: A Bayesian Data Cleaning System with Automated Prior Generation",
+    "recommendation": 5,
+    "authors": "Ziyan Han, Jing Zhu, Jinbin Huang, Rui Mao, Jianbin Qin",
+    "affiliation": "Shenzhen University（深圳大学）, SICS（深圳大学智能计算与信息安全实验室）",
+    "abstract": "我们展示 BClean+，这是一个贝叶斯数据清洗系统，将自动化先验生成、数据关系建模和概率推理统一为端到端清洗框架。BClean+（1）使用大语言模型（LLM）进行零样本语义标注，然后自动合成格式模式作为用户约束；（2）通过带社区发现的贝叶斯网络构建属性依赖模型；（3）基于最大后验概率（MAP）结合补偿评分模型执行概率推理；（4）支持可选合成概率编程语言（PPL）代码，可在 PClean 等基于 PPL 的系统中复用。我们展示 BClean + 的（a）交互式界面，支持用户约束、贝叶斯网络和 PPL 的可选细化；（b）自动化与可解释性；（c）在真实数据集上的有效性与效率。大量实验表明，BClean + 平均 F1 值达到 0.934，相比同类清洗系统运行速度提升 98.6 倍，同时将用户配置时间从数小时缩短至分钟级。开源链接：https://github.com/DSEG-Group/BCleanplus",
+    "link": "https://philo-vanguard.github.io/files/papers/BClean-TKDE26.pdf",
+    "tags": ["数据清洗、贝叶斯网络、大模型应用、数据质量"]
+  }, 
+  {
+    "id": 2,
+    "title": "LazyVLM: Neuro-Symbolic Approach to Video Analytics",
+    "recommendation": 3,
+    "authors": "Xiangru Jian, Wei Pang, Zhengyuan Dong, Chao Zhang, M. Tamer Özsu",
+    "affiliation": "University of Waterloo（滑铁卢大学）",
+    "abstract": "当前视频分析方法在灵活性与效率间存在根本权衡。端到端视觉语言模型（VLM）在长上下文处理中困难且计算成本高，而神经符号方法高度依赖人工标注与僵化规则设计。本文提出 LazyVLM，一种面向规模化视频分析的神经符号系统，提供类似 VLM 的用户友好查询界面，同时解决其可扩展性局限。LazyVLM 允许用户轻松上传视频数据，并通过半结构化文本界面指定复杂多帧视频查询。为克服 VLM 的可扩展性局限，LazyVLM 将多帧视频查询分解为细粒度操作，将大部分处理负载转移至高效的关系查询执行与向量相似性搜索。实验证明，LazyVLM 为大规模开放域视频数据查询提供了鲁棒、高效且易用的解决方案。",
+    "link": "https://arxiv.org/pdf/2505.21459",
+    "tags": ["视频分析、神经符号、向量检索、多媒体数据"]
+  }, 
+  {
+    "id": 3,
+    "title": "Jazero: A Semantic Table Search System",
+    "recommendation": 4,
+    "authors": "Martin Pekár Christensen, Matteo Lissandrini, Katja Hose",
+    "affiliation": "Aalborg University（奥尔堡大学）, University of Verona（维罗纳大学）, Technische Universität Wien（维也纳工业大学）",
+    "abstract": "查找相关表格具有挑战性，通常使用关键词、连接或并集搜索。然而这些方法通常无法检索所有相关表格，因为它们需要某种精确匹配或结构相似性。语义表搜索近期被提出，利用知识图谱与各种语义相似度检索语义相关的数据湖表格。具体而言，语义表搜索基于包含的实体提及计算表格相关性，无需严格结构相似性。这使得相比现有方法能发现更大范围的相关表格。本文展示 Jazero，首个支持多种语义相似度度量的数据湖语义搜索系统。Jazero 采用示例查询范式，用户提供包含目标数据的示例表格，实现基于查询实体元组的数据湖表格实体中心发现。Jazero 通过分层导航小世界索引对不同知识图谱实体向量表示进行搜索空间预过滤，实现可扩展的语义表搜索，平均运行时间提升 87.4%，平均运行时间 3.3 秒。Jazero 让用户体验这种新颖的发现范式，支持多种实体表示与相似度函数，可在多个数据湖实例中执行数据发现。",
+    "link": "https://zenodo.org/records/18935699",
+    "tags": ["语义搜索、数据湖、知识图谱、表格检索"]
+  }, 
+  {
+    "id": 4,
+    "title": "GeX: Guiding Expert Data Systems Tuning with Explainable AI",
+    "recommendation": 5,
+    "authors": "Andrew Chai",
+    "affiliation": "York University（约克大学）",
+    "abstract": "现代数据库系统（如 IBM Db2）依赖基于代价的优化器提升工作负载性能，但其决策过程难以解释。由于优化器复杂性、众多配置选项与独特工作负载特征的交互，针对特定工作负载调优仍具挑战。此外，数据库系统在优化器与自动调优工具中越来越依赖黑盒机器学习模型，这些模型缺乏可解释性，阻碍专家信任与调试。本文提出 GEX，使用可解释 AI 技术提供数据库优化器行为的可解释洞察。我们将生成基于扰动的显著性图的 XAI 技术适配到 SQL 查询领域。通过 GEX，我们提出显著性分数指导专家完成系统调优任务的框架，包括统计视图创建、配置参数调整与查询重写。基于 TPC-DS 基准与 IBM Db2 的实验评估，验证了 GEX 捕获并传达优化器行为的能力。",
+    "link": "",
+    "tags": ["数据库调优、可解释 AI、查询优化、性能优化"]
+  }, 
+  {
+    "id": 5,
+    "title": "A Fast, Versatile, and User-friendly Plugin for Kernel Density Analysis",
+    "recommendation": 3,
+    "authors": "Tsz Nam Chan, Bojian Zhu, Leong Hou U, Dingming Wu, Wei Tu, Jianliang Xu",
+    "affiliation": "Shenzhen University（深圳大学）, Hong Kong Baptist University（香港浸会大学）, University of Macau（澳门大学）",
+    "abstract": "核密度分析（KDA）是各应用领域常用工具，典型应用包括疾病爆发检测、犯罪 / 交通 / 交通事故热点检测。然而 KDA 操作缓慢，无法扩展到大分辨率与大规模数据集。此外，领域专家还采用更复杂的 KDA 变体，如时空核密度分析（STKDA）与网络核密度分析（NKDA），加剧了分析效率问题。此外，现有软件包无法同时支持 KDA、STKDA 与 NKDA，部分需要编程技能，这可能是部分领域专家不具备的。为解决效率、通用性与易用性问题，我们开发 QGIS 插件 Fast Density Analysis，基于降复杂度算法同时支持 KDA、STKDA 与 NKDA。凭借简洁的用户界面，用户无需编程技能即可使用该插件。在演示中，我们提供三个位置数据集（最多 832 万个数据点），让参与者（1）对比该插件与现有软件包的效率；（2）进行案例研究发现数据集中的热点 / 隐藏模式。",
+    "link": "https://edisonchan-szu.github.io/publication/Fast_Density_Analysis.pdf",
+    "tags": ["核密度分析、空间数据、GIS 算法、时空数据"]
+  }, 
+  {
+    "id": 8,
+    "title": "Scoper: Streamline Linkable Schemas for Matching",
+    "recommendation": 5,
+    "authors": "Leonard Traeger, Andreas Behrend, George Karabatis",
+    "affiliation": "University of Maryland, Baltimore County（马里兰大学巴尔的摩县分校）, Technical University of Cologne（科隆应用技术大学）",
+    "abstract": "模式匹配是整合来自不同数据源数据的关键任务，旨在识别不同模式间属性与表的对应关系。在规模、模式设计和领域高度异构的多源模式场景中，我们发现仅有一小部分表和属性是可链接的，而大量不可链接元素占据搜索空间并降低链接生成质量。因此，本文将语义模式可链接性评估作为高质量预处理阶段，识别可链接的表和属性，同时剪枝不可链接元素。本文引入协同域限定，一种自监督分布式编码器 - 解码器框架，支持本地模式独立生成精简模式。实验表明，协同域限定相比基准域限定方法更鲁棒、高效且有效。这一结论在相对同质（领域特定）或高度异构的多源模式匹配场景中均成立。在后续匹配实验中，以精简模式为输入的算法将链接质量（精确率）提升最高 80%，F1 值提升最高 20%，同时保持高效运行。",
+    "link": "https://www.openproceedings.org/2026/conf/edbt/paper-22.pdf",
+    "tags": ["模式匹配、数据集成、自监督学习、异常检测"]
+  }, 
+  {
+    "id": 10,
+    "title": "DeepSketch 2.0: Discovering Temporal Relationships in Large Time Series Datasets",
+    "recommendation": 4,
+    "authors": "Zheng Zhang, Runzhe Jiang, Andrew Crotty",
+    "affiliation": "Northwestern University（西北大学）",
+    "abstract": "基于草图的查询界面已成为时序数据集交互式探索的流行工具，允许领域专家无需编写代码即可搜索目标模式。然而当前大多数系统专注于单模式查询，无法支持更复杂的搜索行为，如同时查询具有时序关系的多个模式。本演示展示 DeepSketch 的持续研发工作，这是面向时序相似性搜索的查询草图工具，解决上述局限。为支持包含多个时序关联模式的灵活即席查询，DeepSketch 提供允许用户组合、约束与关联复杂查询的搜索界面。参与者将有机会使用该工具交互式探索多个大型真实时序数据集。",
+    "link": "https://cs.brown.edu/people/acrotty/pubs/2026045074.pdf",
+    "tags": ["时序数据、相似性搜索、草图查询、向量检索"]
+  }, 
+  {
+    "id": 14,
+    "title": "RUBEN: Rule-Based Explanations for Retrieval-Augmented LLM Systems",
+    "recommendation": 4,
+    "authors": "Joel Rorseth, Parke Godfrey, Lukasz Golab, Divesh Srivastava, Jarek Szlichta",
+    "affiliation": "University of Waterloo（滑铁卢大学）, York University（约克大学）, AT&T（美国电话电报公司）",
+    "abstract": "本文展示 RUBEN，一个交互式工具，用于发现最小规则以解释数据驱动应用中检索增强大语言模型（LLM）的输出。我们利用新颖的剪枝策略高效发现涵盖所有其他规则的最小规则集。我们进一步展示这些规则在 LLM 安全中的新颖应用，specifically 测试安全训练的鲁棒性与对抗性提示注入的有效性。",
+    "link": "https://arxiv.org/pdf/2605.10862v1",
+    "tags": ["RAG、可解释 AI、大模型安全、规则挖掘"]
+  }
+]
