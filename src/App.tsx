@@ -350,7 +350,7 @@ export default function App() {
             <div className="p-8 hidden lg:block border-b border-slate-100 flex-shrink-0">
               <h1 className="text-2xl font-serif font-black tracking-widest text-slate-900 leading-tight">
                 ICDE 2026<br/>
-                <span className="text-blue-700 text-lg tracking-normal font-sans font-bold">达梦创新——ICDE 2026 专刊</span>
+                <span className="text-blue-700 text-lg tracking-normal font-sans font-bold">《达梦创新》子刊</span>
               </h1>
             </div>
 
@@ -514,7 +514,7 @@ export default function App() {
         </div>
 
         <footer className="bg-white border-t border-slate-200 py-8 text-center text-slate-500 text-sm font-sans">
-          <p>达梦创新——ICDE 2026 专刊</p>
+          <p>《达梦创新》子刊</p>
         </footer>
       </main>
     </div>
