@@ -350,7 +350,7 @@ export default function App() {
             <div className="p-8 hidden lg:block border-b border-slate-100 flex-shrink-0">
               <h1 className="text-2xl font-serif font-black tracking-widest text-slate-900 leading-tight">
                 ICDE 2026<br/>
-                <span className="text-blue-700 text-lg tracking-normal font-sans font-bold">数据库创新研究技术内刊</span>
+                <span className="text-blue-700 text-lg tracking-normal font-sans font-bold">达梦创新——ICDE 2026 专刊</span>
               </h1>
             </div>
 
@@ -394,11 +394,11 @@ export default function App() {
           <div className="max-w-5xl mx-auto relative z-10 text-center space-y-6">
             <div className="inline-block border-b border-slate-600 pb-2 mb-4">
               <p className="text-slate-400 tracking-[0.2em] text-sm uppercase font-medium font-sans">
-                Ji Shu Nei Kan | 2026 年 6 月 12 日
+                ZHUAN KAN | 2026 年 6 月 26 日
               </p>
             </div>
             <h1 className="text-5xl sm:text-7xl font-serif font-black text-white tracking-wider">
-              数据库创新研究技术内刊
+              达梦创新
             </h1>
             <div className="w-24 h-1 bg-blue-500 mx-auto mt-6 mb-8"></div>
             <p className="text-3xl text-slate-300 font-light tracking-wide font-sans">
@@ -461,7 +461,7 @@ export default function App() {
               <div className="mt-16 pt-8 border-t border-slate-100 flex justify-end">
                 <div className="text-right">
                   <p className="font-bold text-slate-900 text-lg tracking-wide font-sans">武汉研究院</p>
-                  <p className="text-sm text-slate-500 mt-1 font-serif tracking-widest">2026 年 6 月 12 日</p>
+                  <p className="text-sm text-slate-500 mt-1 font-serif tracking-widest">2026 年 6 月 26 日</p>
                 </div>
               </div>
             </motion.div>
@@ -514,7 +514,7 @@ export default function App() {
         </div>
 
         <footer className="bg-white border-t border-slate-200 py-8 text-center text-slate-500 text-sm font-sans">
-          <p>数据库创新研究技术内刊——ICDE 2026 专刊</p>
+          <p>达梦创新——ICDE 2026 专刊</p>
         </footer>
       </main>
     </div>
