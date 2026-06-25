@@ -1,0 +1,33 @@
+[
+  {
+    "name": "第一类：数据库内核优化技术",
+    "subcategories": [
+      { "name": "内核工程优化", "paperIds": [27, 30] }
+    ]
+  },
+  {
+    "name": "第二类：数据库 + AI 双向赋能技术",
+    "subcategories": [
+      { "name": "LLM + 数据库落地", "paperIds": [14, 33, 35, 36] },
+      { "name": "大模型赋能业务数据治理", "paperIds": [10, 28] }
+    ]
+  },
+  {
+    "name": "第三类：数据库 + 新硬件融合技术",
+    "subcategories": [
+      { "name": "全方向", "paperIds": [12, 18] }
+    ]
+  },
+  {
+    "name": "第四类：数据库测试技术",
+    "subcategories": [
+      { "name": "全方向", "paperIds": [5, 11] }
+    ]
+  },
+  {
+    "name": "第五类：数据库架构与拓展技术",
+    "subcategories": [
+      { "name": "全方向", "paperIds": [2, 4, 16, 37] }
+    ]
+  }
+]

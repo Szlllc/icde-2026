@@ -1,981 +1,125 @@
 [
-  {
-    "id": 2,
-    "title": "FaScalSQL: A Fast and Scalable GPU-Accelerated SQL Query Engine for Out-of-Memory Tables",
-    "recommendation": 4,
-    "authors": "Chaemin Lim, Suhyun Lee, Jinwoo Choi, Kwanghyun Park, Jinho Lee, Joonsung Kim, Youngsok Kim",
-    "affiliation": "Yonsei University（延世大学）, Seoul National University（首尔国立大学）, Sungkyunkwan University（成均馆大学）",
-    "abstract": "图形处理器（GPU）在分析型 SQL 查询处理领域具备良好的应用前景，但 GPU 内存容量有限，难以处理超出其内存大小的大型数据表。现有查询引擎主要分为两类：第一类是流式引擎，将输入列静态划分为数据块，反复在主机与 GPU 之间传输数据并执行关系运算；第二类是CPU-GPU 分布式引擎**，在 GPU 内存中设置固定大小的静态缓存，将输入列及查询任务拆分至主机 CPU 与 GPU 协同处理。然而,现有引擎存在两大核心瓶颈，最终导致 GPU 资源利用率严重不足：一是主机到 GPU 的数据传输开销过大，二是CPU 与 GPU 负载失衡。这类问题的根源在于：引擎采用静态数据部署策略，与分析型查询动态逐级过滤数据的特性相互矛盾。随着数据表规模增大，该矛盾会引发两种问题：要么传输大量最终会被过滤丢弃的列数据，要么将绝大部分计算任务转嫁至主机 CPU。本文提出FaScalSQL—— 一款高性能、可扩展的 GPU 加速 SQL 查询引擎，专门解决超内存数据表查询场景下 GPU 利用率低下的问题。FaScalSQL 采用全新的按需式 CPU-GPU 协同处理架构，结合GPU 主动发起数据传输与 CPU-GPU 联合计算能力。该引擎摒弃传统静态、未做过滤的大数据块传输方式，依托主机 CPU 预过滤结果，由 GPU 主动按需拉取所需数据。本文基于星型模式基准测试（SSB）与 TPC-H 基准测试对 FaScalSQL 开展实验评估。在规模因子为 100 和 200 的 SSB 测试集下，相较于现有流式引擎与 CPU-GPU 分布式引擎，FaScalSQL 的几何平均加速比分别达到**2.60 倍**与**2.20 倍**。开源链接：https://github.com/yonsei-hpcp/fascalsql",
-    "link": "https://yonsei-hpcp.github.io/files/fascalsql-icde2026-preprint.pdf",
-    "tags": ["GPU加速", "查询执行引擎", "CPU-GPU协处理"]
-  },
-  
-  {
-    "id": 6,
-    "title": "Exqutor: Extended Query Optimizer for Vector-augmented Analytical Queries",
-    "recommendation": 5,
-    "authors": "Hyunjoon Kim, Chaerim Lim, Hyeonjun An, Rathijit Sen, Kwanghyun Park",
-    "affiliation": "Yonsei University（延世大学）, Microsoft（微软）",
-    "abstract": "向量相似度检索在数据科学流程中的重要性与日俱增，在检索增强生成（RAG）场景中尤为突出。该技术可高效调取外部相关知识，从而优化大语言模型的推理效果。随着检索增强生成技术进一步拓展至表格增强生成领域，实现结构化数据的融合应用，**结合表格检索与向量检索**的业务负载也愈发常见。但向量检索部分的基数估算存在偏差，会导致查询执行方案不够理想，这类混合查询的高效执行至今仍是一大难题。本文提出**Exqutor**—— 一款面向向量增强型分析查询的扩展查询优化器。Exqutor 是可灵活接入的基数估算框架，专门用于解决上述问题：当系统部署有 HNSW、IVF 等向量索引时，该框架结合精确基数查询优化技术，提升估算精度；在无向量索引的场景下，则采用**自适应样本量调整**的采样方案，动态调节采样规模，兼顾估算准确度与采样开销。依托上述设计，Exqutor 能够在控制计算成本的前提下，高效完成向量检索基数的近似计算。本文将该框架分别集成至 pgvector、VBASE 与 DuckDB 三款数据库中，实验结果表明，针对向量增强型分析查询，系统性能最高可提升**四个数量级**。开源链接：https://github.com/BDAI-Research/Exqutor",
-    "link": "https://arxiv.org/pdf/2512.09695",
-    "tags": ["查询优化", "相似度检索"]
-  },
-  {
-    "id": 8,
-    "title": "Towards the Distributed Large-scale k-NN Graph Construction by Graph Merge",
-    "recommendation": 3,
-    "authors": "Cheng Zhang, Wan-Lei Zhao, Shihai Xiao, Jiajie Yao, Xuecang Zhang",
-    "affiliation": "Xiamen University（厦门大学）, Huawei（华为）",
-    "abstract":"为实现与大语言模型的实时交互，以及社交媒体场景下的即时检索、即时推荐，针对海量向量化多媒体数据构建**k 近邻图**或索引图，已成为亟待解决的问题。在此类应用场景中，数据规模与图结构规模往往超出单台设备的处理能力。本文通过高效的图合并方法，解决大规模图的构建难题。针对单节点图构建场景，本文提出两种通用且高并行度的算法 —— 双向合并算法与多路合并算法，用于将多个子图融合为完整大图。针对多节点图构建场景，本文设计了一套基于双向合并算法的多节点处理流程。当数据量超出单节点内存上限时，该流程可支持在单节点或多节点集群上完成大规模 k 近邻图与索引图的构建。针对大规模 k 近邻图和索引图开展了大量构建实验。在 k 近邻图构建方面，依托并行图合并技术，可高效构建大规模、高质量的 k 近邻图；实测结果显示，仅使用 3 个节点，构建十亿级规模 k 近邻图耗时约 17 小时。在索引图构建方面，合并后的索引图可达到与原始索引图相当的近邻检索性能，同时大幅缩短构建耗时。",
-    "link": "https://arxiv.org/pdf/2509.11697v3",
-    "tags": ["向量索引", "分布式计算", "近似最近邻"]
-  },
-  {
-    "id": 9,
-    "title": "CSD-CoKV: Host-CSD Collaborative Offloading for High-Performance LSM-tree based KV Stores",
-    "recommendation": 4,
-    "authors": "Zhining Cao, Kai Zhang, Jinrun Yang, Hui Li, Nan Su, Qian Wei, Shikun Ma, Zehao Chen, Junbo Yin, Haijun Zhang, Zhaoyan Shen",
-    "affiliation": "Shandong University（山东大学）, Inspur（浪潮）",
-    "abstract": "面向 LSM 树键值存储（KV Store），提出主机 - CSD 协同卸载架构，优化 I/O 与计算卸载，显著提升分布式存储引擎的读写性能。",
-    "link": "",
-    "tags": ["KV存储", "计算存储卸载", "LSM-tree"]
-  },
-  {
-    "id": 12,
-    "title": "MVGPT: Generative Materialized View Forecasting",
-    "recommendation": 4,
-    "authors": "Yue Han, Guoliang Li, Wenchun Xu, Xianglei Ran, ZeYa Gong, Wei Guo, Guang Qiu, Bo Zheng",
-    "affiliation": "Tsinghua University（清华大学）, Alibaba（阿里巴巴）",
-    "abstract": "物化视图选择依赖历史查询，但实际查询工作负载受不可预期的外部事件驱动而持续演化，传统方法生成的MV很快失效。MVGPT提出生成式物化视图预测框架：1）基于贝叶斯网络的谓词级生成式MV模型：将MV语句在谓词级分解为基本单元，通过BN学习变量间条件概率分布，采样生成大量高实用性MV，5分钟可生成10,000个MV；2）事件感知的查询工作负载变化推理：从多源自动收集事件，用LLM评估事件与查询的相关性，基于语义相似度和时间接近度检索top-3最相关事件；3）LLM与BN联合推理管线：LLM负责高层推理和MV种子生成，BN负责可控的批量MV生成，解决LLM语法无效SQL、幻觉和高计算成本三大风险。在阿里巴巴广告分析平台上，MVGPT对新查询命中率高48%（vs AutoView）、96%（vs DQM），查询执行95分位降低54.17%。",
-    "link": "https://dbgroup.cs.tsinghua.edu.cn/ligl/papers/ICDE26-MVGPT.pdf",
-    "tags": ["物化视图", "查询优化", "LLM应用"]
-  },
- 
-  
-  {
-    "id": 19,
-    "title": "A Unified Framework for Compressed and Encrypted Text Direct Processing",
-    "recommendation": 3,
-    "authors": "Yani Liu, Feng Zhang, Yu Zhang, Siqi Ma, Elisa Bertino, Xiaoyong Du",
-    "affiliation": "Renmin University of China（中国人民大学）, University of New South Wales（新南威尔士大学）, Purdue University（普渡大学）",
-    "abstract": "",
-    "link": "",
-    "tags": ["数据安全", "数据压缩", "密态计算"]
-  },
-  {
-    "id": 22,
-    "title": "Revisiting Single-Table Retrieval: An Open Problem Under 360° Stress Tests [Experiment, Analysis, and Benchmark]",
-    "recommendation": 3,
-    "authors": "Chenyu Yang, Junhao Li, Ziyu Jiang, Yuyu Luo, Ju Fan, Nan Tang",
-    "affiliation": "HKUST(GZ)（香港科技大学（广州））, Renmin University of China（中国人民大学）",
-    "abstract": "",
-    "link": "",
-    "tags": ["单表检索", "基准评测"]
-  },
-  {
-    "id": 23,
-    "title": "MICRO: A Lightweight Middleware for Optimizing Cross-store Cross-model Graph-Relation Joins",
-    "recommendation": 4,
-    "authors": "Xiuwen Zheng, Arun Kumar, Amarnath Gupta",
-    "affiliation": "University of California, San Diego（加州大学圣地亚哥分校）",
-    "abstract": "跨模型图-关系连接查询面临缺乏统一代数与代价模型、规划空间指数级膨胀等挑战。MICRO提出轻量级中间件：1）跨模型统一代数与两个新型连接算子：Relation-Graph Join将关系元组映射为图顶点执行图原生属性连接，Graph-Relation Join将图关系物化为关系表执行关系连接；2）基于Learning-to-Rank的查询优化器CMLero：采用TBCNN+GCN双结构嵌入编码计划语义，通过成对比较训练选出最优计划，数据量相比回归模型提升约7倍；3）搜索空间剪枝：移除图顶点向关系引擎的迁移路径，将搜索空间从O(3^n)降至O(2^n)。在OA-USPTO真实数据集上，MICRO最高达2.1×加速，14个查询加速超10×。开源链接：https://github.com/xiz675/MICRO",
-    "link": "https://arxiv.org/pdf/2603.13835",
-    "tags": ["多模型数据库", "查询优化", "联邦查询"]
-  },
-  {
-    "id": 24,
-    "title": "SwitchDelta: Asynchronous Metadata Updating for Distributed Storage with In-Network Data Visibility",
-    "recommendation": 5,
-    "authors": "Junru Li, Qing Wang, Zhe Yang, Shuo Liu, Jiwu Shu, Youyou Lu",
-    "affiliation": "Tsinghua University（清华大学）, Huawei（华为）",
-    "abstract": "分布存储系统的数据与元数据分离架构下，写操作需有序执行数据写入和元数据更新两个阶段，导致至少2 RTT延迟且吞吐受限于较慢一方。SwitchDelta解决了分布式存储系统数据与元数据分离架构下，强一致性有序写带来的高延迟与吞吐量受限问题：1）In-Switch Data Visibility Protocol：写响应经过交换机时暂存元数据到哈希表并立即转发，写操作1 RTT即提交；2）Best-effort设计与一致性保障：48位哈希值下1024并发请求的冲突概率约1.86e-19，基于时间戳的并发控制防止丢包导致不一致；3）Deferred Metadata Processing：引入操作合并与协程流水线化预取，缓解元数据更新瓶颈，元数据密集场景下吞吐提升高达68.2%。在日志结构KV存储上，写P50延迟降低43.3%~50.0%；分布式文件系统4KB对齐写延迟降低最高47.7%；分布式二级索引写P50延迟降低最高52.4%，峰值吞吐提升最高126.9%。",
-    "link": "https://arxiv.org/pdf/2511.19978",
-    "tags": ["分布式存储", "可编程交换机", "元数据管理"]
-  },
-  {
-    "id": 25,
-    "title": "DIndex: An Efficient On-Disk Learned Index for Memory-Constrained Environments",
-    "recommendation": 3,
-    "authors": "Jiahuan Shen, Chuzhe Tang, Haoning Lan, Ren Ren, Zhaoguo Wang",
-    "affiliation": "Shanghai Jiao Tong University（上海交通大学）, Huawei（华为）",
-    "abstract": "适配边缘、嵌入式等内存受限环境，构建纯磁盘高效学习索引，大幅降低数据库内存占用",
-    "link": "",
-    "tags": ["学习型索引", "外存索引", "存储引擎"]
-  },
-  {
-    "id": 26,
-    "title": "Federated Retrieval over Embedding-Heterogeneous Vector Databases",
-    "recommendation": 3,
-    "authors": "Yuxiang Wang, Yongxin Tong, Zimu Zhou, Ziyuan He, Ruixi Hu, Ke Xu",
-    "affiliation": "Beihang University（北京航空航天大学）, City University of Hong Kong（香港城市大学）",
-    "abstract": "向量数据库通过将非结构化数据映射为高维嵌入实现高效相似性检索，广泛应用于法律文档检索、医疗问答等领域。但在数据分布于自治孤岛的联邦场景中，各孤岛与查询服务器常使用不同嵌入模型，导致跨空间向量无法直接比较，现有联邦检索方案均未解决这一核心的嵌入异构性问题。本文将该场景形式化为联邦近似最近邻搜索（FANNS），利用联邦数据非独立同分布的特性，提出两种自适应查询算法：基于竞争的方法动态调整各孤岛检索规模；基于贡献的方法根据孤岛累积贡献采样高潜力孤岛，并提供延迟降低的理论保证。在i-Naturalist、MS MARCO、Sentiment、Reddit等4个数据集上，自适应方法在同80% recall下实现2.3x至6.2x加速。",
-    "link": "https://zhouzimu.github.io/paper/icde26-wang.pdf",
-    "tags": ["向量数据库", "联邦学习", "近似最近邻搜索"]
-  },
-   
-   
-  {
-    "id": 30,
-    "title": "PRO-HNSW: Proactive Repair and Optimization for High-Performance Dynamic HNSW Indexes",
-    "recommendation": 4,
-    "authors": "Huijun Jin, Jieun Lee, Shengmin Piao, Sangmin Seo, Sanghyun Park",
-    "affiliation": "Yonsei University（延世大学）",
-    "abstract": "图基向量索引HNSW在频繁删除和重新插入的动态环境下性能严重退化，50%数据周转后召回率下降可达14.88%。PRO-HNSW修复了HNSW在动态环境下的性能退化问题：1）RemoveObsoleteEdges（ROE）：遍历存活节点清除过时边，同时通过连通性阈值T保证不会因过度剪枝导致节点隔离；2）RepairDisconnectedNodes（RDN）：通过受限BFS（最多3跳）重新连接碎片分量中的孤立节点，仅利用空闲槽位添加边避免触发代价高昂的启发式邻居选择；3）ResolveUnidirectionalEdges（RUE）：聚焦level 0双向边修复，消除单向边使贪心搜索具备回溯能力，支持多线程并行。在8个数据集上，PRO-HNSW的Pareto前沿均优于标准HNSW和MN-RU变体，GIST1M上峰值Recall@10达84.23%，超越HNSW-Rebuild 2.56个百分点；维护模块总开销增幅<1%。PRO-HNSW还可作为通用图优化工具应用于静态HNSW，提升初始召回率。",
-    "link": "http://delab.yonsei.ac.kr/assets/files/publication/international/conference/Revised_PRO-HNSW%20Proactive%20Repair%20and%20Optimization%20for%20High-Performance%20Dynamic%20HNSW%20Indexes.pdf",
-    "tags": ["向量索引", "HNSW", "索引维护"]
-  },
-  {
-    "id": 33,
-    "title": "BS-tree: A gapped data-parallel B-tree",
-    "recommendation": 4,
-    "authors": "Dimitrios Tsitsigkos, Achilleas Michalopoulos, Nikos Mamoulis, Manolis Terrovitis",
-    "affiliation": "Athena Research Center（雅典娜研究中心）, University of Ioannina（约阿尼纳大学）",
-    "abstract": "随着现代 CPU SIMD 并行能力大幅提升，传统内存 B+树及主流学习型索引因存在严重的分支预测错误、更新时键值移位开销大、内存占用高等问题，无法充分发挥硬件性能。本文提出了一种能利用 SIMD 实现无分支搜索与高效无移位更新的内存BS-tree：1）基于键值复制的间隙机制：空位填充为后一个有效键值，使节点内所有槽位始终持有合法键值，SIMD的succ>=计数搜索可直接在含空位的节点上无分支执行，插入命中空位时零数据移动，插入代价降低30%-35%；2）Frame-of-Reference压缩：固定1024位键数组，差值用16位或32位表示，叶节点容量从16扩展至32或64，内存减少56%-94%，更矮的树高加速搜索；3）缓存对齐与大页面内存管理：节点键数组固定1024位（2条cache line），SIMD搜索仅需2条AVX-512指令，TLB miss远低于所有对手。在BOOKS、FB、OSM、GENOME、PLANET等5个真实数据集上，BS-tree在单线程和多线程场景下均展现稳健的优越性，构建速度比学习索引快1-2个数量级。开源链接：https://github.com/dTsitsigkos/BsTree-A-gapped-data-parallel-B-tree",
-    "link": "https://arxiv.org/pdf/2505.01180",
-    "tags": ["索引结构", "SIMD并行", "主存数据库"]
-  },
-  {
-    "id": 34,
-    "title": "Zero-Knowledge Verifiable Graph Query Evaluation via Expansion-Centric Operator Decomposition",
-    "recommendation": 3,
-    "authors": "Hao Wu, Changzheng Wei, Yanhao Wang, Li Lin, Yilong Leng, Shiyu He, Minghao Zhao, Hanghang Wu, Ying Yan, Aoying Zhou",
-    "affiliation": "East China Normal University（华东师范大学）, Ant Group（蚂蚁）",
-    "abstract": "随着图数据库在金融、社交等敏感领域的广泛应用，亟需在不泄露原始数据的前提下证明查询执行的正确性，然而图查询的迭代遍历、动态数据访问特性与零知识证明的静态电路模型存在本质冲突，直接转换会产生规模过大的电路，导致证明开销难以承受。本文提出设计适配图计算的零知识可验证查询方案ZKGraph，将图查询分解为更细粒度的基础算子，通过一系列可组合的密码学原语，利用更小的电路分步完成验证。特别地，以图扩展这一图查询核心操作为中心设计算子分解方案，为扩展原语及各类遍历属性构建了针对 PLONKish 算术化优化的专用零知识证明电路。在LDBC SNB工作负载上，单源最短路径算子在跳数 2-6 时运行时间比朴素 BFS 快 1.8 倍至 17.4 倍，内存消耗低 3.3 倍至 11.3 倍。开源链接：https://github.com/Hao8172/ZKGraph",
-    "link": "https://arxiv.org/pdf/2507.00427",
-    "tags": ["数据库安全", "零知识证明", "图数据库"]
-  },
-  {
-    "id": 35,
-    "title": "cuFHEDB: GPU-Accelerated Fully Homomorphic Encryption Database",
-    "recommendation": 3,
-    "authors": "Shijie Gao, Feng Zhang, Qian Xu, Yang Li, XueFeng Liu, Chao Jiang, Limin Xiao, Siqi Ma, Elisa Bertino, Xiaoyong Du",
-    "affiliation": "Renmin University of China（中国人民大学）, Lenovo（联想）, University of New South Wales（新南威尔士大学）, Purdue University（普渡大学）",
-    "abstract": "cuFHEDB 是首个面向加密 SQL 查询执行计算难题、专为 GPU 加速设计的全同态加密（FHE）数据库。该方案依托 GPU 并行算力与前沿优化技术，大幅提升 SQL 查询执行性能，让基于全同态加密的数据库在实际隐私保护场景中具备更高的落地可行性。开源链接：https://github.com/SekaiGao/cuFHEDB",
-    "link": "",
-    "tags": ["全同态加密", "GPU加速", "密态数据库"]
-  },
-  {
-    "id": 36,
-    "title": "Contemp: Instance Caching Based on Container Temperature in Serverless Environment",
-    "recommendation": 3,
-    "authors": "Pengwei Wang, Nuo Chen, Haoquan Qi, Yichen Zhong, Shun Song",
-    "affiliation": "Donghua University（东华大学）, Ant Group（蚂蚁）",
-    "abstract": "Serverless计算作为云计算的前沿架构，让开发者无需关注底层资源管理，专注于业务逻辑开发，已广泛应用于AWS Lambda、Azure Functions、阿里云函数计算、华为FunctionGraph等主流云平台。容器技术作为Serverless的核心支撑，虽保障了运行时一致性，但实例的频繁创建与销毁会引发冷启动延迟，成为制约系统性能的关键瓶颈。现有实例缓存机制多采用固定规则或单一指标决策，在高并发突发负载下存在明显局限：要么过早淘汰高活性容器，要么让低活性容器过度占用资源，导致资源利用率与服务质量难以平衡。针对这一核心问题，课题组提出基于容器温度的缓存淘汰策略Contemp。该策略创新性地构建了历史增强自适应温度模型（HEATM），整合函数调用频率、冷启动延迟、资源利用率等多维度指标，并借鉴牛顿冷却定律设计温度衰减机制，动态量化容器实时活性水平。通过区分首次调用与重复调用场景，HEATM能精准识别周期性调用模式与突发负载特征，有效避免缓存污染；同时，基于容器温度动态调整缓存优先级，实现资源成本与冷启动延迟的最优权衡。实验基于Azure Functions真实负载轨迹验证，结果表明：与现有主流策略相比，Contemp在不同工作负载强度下，平均提升各节点缓存命中率17.3%，降低冷启动延迟30.1%，并将系统性价比提升25.4%。",
-    "link": "",
-    "tags": ["Serverless", "实例缓存", "云数据库"]
-  },
-  {
-  "id": 38,
-  "title": "OsmT: Bridging OpenStreetMap Queries and Natural Language with Open-source Tag-aware Language Models",
-  "recommendation": 4,
-  "authors": "Zheng Yuan, Hao Chen, Zijin Hong, Qinggang Zhang, Feiran Huang, Qing Li, Xiao Huang",
-  "affiliation": "The Hong Kong Polytechnic University（香港理工大学）, City University of Macau（澳门城市大学）, Jinan University（暨南大学）",
-  "abstract": "自然语言与结构化查询的桥接是数据库领域长期挑战，现有方案多依赖高成本闭源大模型，且未充分建模 OpenStreetMap（OSM）的标签层次与拓扑语义，导致查询生成准确率低、难以轻量化部署。本文提出开源标签感知语言模型 OSMT，专门实现自然语言与 OverpassQL 的双向转换。核心采用掩码语言建模 + 双向翻译的混合预训练策略，融合 OSM 标签三元组、标签描述与查询 - 语句对三类数据；关键创新是标签检索增强（TRA）机制：先构建覆盖全量 OSM 标签的语义知识库，通过嵌入检索获取上下文相关标签，经精修与合法性校验后注入生成过程，精准捕获标签的层次与关系依赖，解决地理空间查询的拓扑复杂性问题。同时支持 OverpassQL 转文本的逆向任务，提升查询可解释性。在 OverpassNL 基准上，OSMT-base+TRA 的综合查询相似度 OQS 达 75.5，超越 GPT-4 等闭源大模型，执行准确率较此前 SOTA 提升 6.7 个百分点，且参数量仅为 GPT-4o 的 0.3%。开源链接：https://github.com/zwanah/OsmT/",
-  "link": "https://arxiv.org/abs/2512.04738",
-  "tags": ["结构化查询生成", "自然语言接口", "Text-to-OverpassQL", "OverpassQL-to-Text", "语言模型 LM"]
-},
-  {
-    "id": 39,
-    "title": "Knapsack Optimization-based Schema Linking for LLM-based Text-to-SQL Generation",
-    "recommendation": 4,
-    "authors": "Zheng Yuan, Hao Chen, Zijin Hong, Qinggang Zhang, Feiran Huang, Qing Li, Xiao Huang",
-    "affiliation": "The Hong Kong Polytechnic University（香港理工大学）, City University of Macau（澳门城市大学）, Jinan University（暨南大学）",
-    "abstract": "Text-to-SQL任务中，模式链接是自然语言与数据库结构对齐的核心环节，但现有召回式、生成式方法普遍存在漏选关键表列与引入冗余元素的两难，传统召回率、精确率指标也无法准确反映链接对 SQL 生成的实际影响。为此，本文提出基于背包优化的模式链接方法 KaSLA，并设计 Recall+、Precision + 新指标，强化漏选惩罚以贴合真实生成需求。KaSLA 采用二元 - 概率双模型评分、分层链接策略，结合相似查询动态设定冗余容忍度，通过 0-1 背包优化平衡相关性与冗余。在 BIRD、Spider 基准测试中，KaSLA 可即插即用，使 CodeS、RSL-SQL 等主流模型执行准确率最高提升 10.67%，列级链接 F1 值显著优于现有方法，有效解决模式链接权衡难题。开源链接：https://github.com/DEEP-PolyU/KaSLA",
-    "link": "https://arxiv.org/pdf/2502.12911",
-    "tags": ["Text-to-SQL", "模式链接", "查询优化"]
-  },
-  
-  {
-    "id": 44,
-    "title": "PROGQL: A Provenance Graph Query System for Cyber Attack Investigation",
-    "recommendation": 3,
-    "authors": "Fei Shao, Jia Zou, Zhichao Cao, Xusheng Xiao",
-    "affiliation": "Case Western Reserve University（凯斯西储大学）, Arizona State University（亚利桑那州立大学）",
-    "abstract": "溯源分析（PA）是网络攻击调查的核心技术，通过系统审计日志构建溯源图还原攻击链路，但现有方案难以融合专家知识、内存开销常超 100GB，扩展性严重受限。本文提出 PROGQL—— 面向网络攻击调查的溯源图查询系统，设计领域专用查询语言，支持约束遍历、边权重计算、值传播与图合并四大核心能力；配套优化查询引擎，解耦模型训练与图构建，依托数据库实现增量搜索，无需将全量数据加载至内存。在 14 类真实攻击场景测试中，PROGQL 查询简洁度较主流 Cypher 提升 9-17 倍，内存占用降低 8 倍、查询速度提升 2.5 倍，兼容关系型与图数据库，有效解决大规模攻击溯源的扩展性难题开源链接：https://github.com/ProGQL/ProGQL",
-    "link": "https://arxiv.org/pdf/2510.22400",
-    "tags": ["图查询", "溯源分析", "网络安全"]
-  },
-
-   {
-    "id": 51,
-    "title": "Mitigating Dual Load Imbalance via Dynamic Cooperative Scheduling in Distributed Key-Value Stores",
-    "recommendation": 3,
-    "authors": "Jiakun Zhang, Patrick P. C. Lee, Wenzhe Zhu, Yongkun Li, Shuyi Zhang, Yinlong Xu",
-    "affiliation": "University of Science and Technology of China（中国科学技术大学）, The Chinese University of Hong Kong（香港中文大学）",
-    "abstract": "分布式KV存储基于范围的分片导致CPU利用率和磁盘I/O带宽两个维度同时不均衡，且维度间不对齐、动态变化、紧耦合。Libra提出协作调度框架：1）基于关键维度的协作调度：每轮选择对全局负载不均衡贡献最大的维度作为关键维度，从源节点迁移满足负载约束、干扰约束（不对非关键维度产生负面影响）和收益阈值的region到目的节点；2）轻量级双层信息采集+指标映射：区分读写操作引入校正因子c=1.63将OPS映射至硬件资源使用，双层心跳将通信开销控制在极低水平（新增CPU使用<10%）；3）基于负载的Region分裂（L-split）+惰性调度：L-split按请求累积负载找分裂点，误差率约10%（S-split超40%），惰性调度避免冗余分裂迁移，7轮后无惰性调度CPU通信开销增加105.9%。在Mixgraph工作负载上写入吞吐提升32.4%~72.1%，P99写入尾延迟降低55.1%~63.2%。开源链接：https://github.com/JK1Zhang/Libra",
-    "link": "https://www.cse.cuhk.edu.hk/~pclee/www/pubs/icde26.pdf",
-    "tags": ["分布式存储", "负载均衡", "KV存储"]
-  },
-  {
-    "id": 53,
-    "title": "Reconfiguring Scalable Hashing with Persistent CPU Caches",
-    "recommendation": 3,
-    "authors": "Zhenyu Yu, Bolong Zheng, Ling Xu, Qianlu Wu, Qiang Chen, Ziyang Yue",
-    "affiliation": "Huazhong University of Science and Technology（华中科技大学）, Shuyi Technology（数羲科技）",
-    "abstract": "",
-    "link": "",
-    "tags": ["哈希索引", "持久内存", "内存数据库"]
-  },
-  {
-    "id": 54,
-    "title": "TemplateQO: Template-aware and Scalable Query Optimization with Data-efficient Learning",
-    "recommendation": 4,
-    "authors": "Pengfei Zheng, Guoneng Li, Ling Xu, Rong Zhu, Yan Li, Bolong Zheng",
-    "affiliation": "Huazhong University of Science and Technology（华中科技大学）, Alibaba（阿里巴巴）, Wuhan University of Technology（武汉理工大学）",
-    "abstract": "针对传统学习型查询优化数据开销大、泛化性差的痛点，设计模板感知的轻量化学习优化框架，基于少量数据即可完成查询计划优化，具备极强的可扩展性，适配大规模、多类型SQL查询场景，有效提升数据库查询优化器的自适应能力与落地实用性。开源链接：https://github.com/sigmod2026/TemplateQO",
-    "link": "",
-    "tags": ["查询优化", "学习型优化器", "负载感知"]
-  },
-  {
-    "id": 56,
-    "title": "SOLAR: Scalable Distributed Spatial Joins through Learning-based Optimization",
-    "recommendation": 3,
-    "authors": "Yongyi Liu, Ahmed Abdelmaguid, Ahmed Mohamood, Amr Magdy, Minyao Zhu",
-    "affiliation": "University of California, Riverside（加州大学河滨分校）, Google（谷歌）",
-    "abstract": "分布式空间连接在构建均衡分区器时面临巨大计算开销，对2TB数据分区可耗时5小时。现有系统每次查询都重新计算分区器，造成冗余。SOLAR采用离线-在线两阶段架构：1）基于元数据的数据集嵌入与孪生神经网络相似度学习：从多边形覆盖中提取9维特征向量，经分组MLP子网络编码生成8维嵌入，仅需轻量元数据即可快速评估数据集相似度；2）基于Jensen-Shannon散度的数据集相似度度量：使用8192×8192分辨率空间直方图归一化为概率分布后计算JSD，捕捉分布形状与重叠特征，对量级变化更鲁棒；3）基于随机森林的分区器复用决策模型：以相似度分数为特征训练100棵树分类器，直接建模复杂决策边界。在37个真实数据集上，SOLAR训练连接最高3.6×加速，测试连接最高2.97×加速；在线推理开销可忽略不计（中位数18ms）。开源链接：https://github.com/Yongyi-Liu/SOLAR",
-    "link": "https://arxiv.org/pdf/2504.01292",
-    "tags": ["空间连接", "分布式查询", "学习型优化"]
-  },
-
-  {
-    "id": 60,
-    "title": "Deferred Flushing for Out-of-Order Arrivals in Apache IoTDB",
-    "recommendation": 4,
-    "authors": "Xiaojian Zhang, Zhiheng Liu, Shaoxu Song, Xiangdong Huang, Chen Wang, Jianmin Wang",
-    "affiliation": "Tsinghua University（清华大学）",
-    "abstract": "在工业物联网（IIoT）场景中，由于网络延迟、间歇性断网或边缘节点重传，时序数据在到达中央时序数据库时经常呈现出严重的乱序（Out-of-Order）特征。在采用类似 LSM 树存储架构的时序数据库（如 Apache IoTDB）中，这种乱序到达会频繁触发昂贵的落盘刷脏（Flush）操作，进而产生大量破碎的、时间戳重叠的小文件，极大加剧了后期的合并（Compaction）写放大与查询时的多文件归并延迟。为了彻底解决这一瓶颈，该研究提出了延迟刷脏（Deferred Flushing）机制。该机制通过在内存中动态维护一个乱序感知缓冲区，并基于当前数据的时间戳分布和到达演进规律，智能推迟特定内存分区的落盘时机。通过这种方式，乱序到达的数据能够最大程度地在内存中被原地吸收和就地排序，进而转化为顺序的数据块一次性落盘。在 Apache IoTDB 生产级系统上的落地实验表明，该机制在未引入额外内存开销的前提下，显著减少了刷脏文件数量，降低了系统写放大，并使乱序写入吞吐量和时序范围查询性能提升了数倍。开源链接：https://github.com/DeferredFlushing/DeferredFlushingImpl",
-    "link": "",
-    "tags": ["时序数据库(Time-Series)", "乱序数据处理", "LSM树刷脏机制", "写放大优化"]
-  },
- 
-  {
-    "id": 64,
-    "title": "MatKV: Trading Compute for Flash Storage in LLM Inference",
-    "recommendation": 4,
-    "authors": "Kun-Woo Shin, Jay H. Park, Moonwook Oh, Yohan Jo, Jaeyoung Do, Sang-Won Lee",
-    "affiliation": "Seoul National University（首尔国立大学）, Samsung（三星）",
-    "abstract": "RAG工作流中大量文档被重复检索和重复计算KV，造成冗余。同时闪存SSD在成本、读取带宽和能效上持续快速提升（Samsung 9100 Pro单价$0.1/GB，读取带宽14GB/s），而GPU性价比改进速度不及SSD。MatKV提出用存储换计算的方案：1）KV物化：文档插入向量数据库时立即在GPU上计算KV并异步写入SSD，推理时直接加载预计算KV跳过prefill，将prefill时间降至Vanilla的一半以下；基于『十天法则』——若文档每10天被检索至少1次，SSD存储KV的经济性就优于GPU重计算；2）Prefill I/O与GPU解码的重叠执行：利用multiprocessing将KV加载和token生成并行化，实现最高2倍端到端推理加速；3）解耦prefill/decode使低端GPU可用于解码：RTX 4090+MatKV仅比H100+Vanilla慢1.5倍（vs RTX 4090+Vanilla慢3倍）。整机功耗约为Vanilla的49%，QA准确率几乎无损（TriviaQA上甚至更高）。开源链接：https://github.com/kunwooshin/MatKV",
-    "link": "https://arxiv.org/pdf/2512.22195",
-    "tags": ["LLM推理", "KV Cache", "RAG系统"]
-  },
-{
-  "id": 65,
-  "title": "LUCID: an Updatable and Concurrent Learned Index for Larger-than-Memory Data Management",
-  "recommendation": 4,
-  "authors": "Chaohong Ma, Xiaohui Yu, Yifan Li, Aishan Maoliniyazi, Xiaofeng Meng",
-  "affiliation": "Hebei Normal University（河北师范大学）, York University（约克大学）, Renmin University of China（中国人民大学）",
-  "abstract": "学习型索引在提升数据存储和访问性能方面展现出巨大的潜力，但当数据量超过内存容量时，其在真实世界系统中的应用受到了很大限制。在大规模场景下，纯内存方案变得不切实际，而完全基于磁盘的技术通常又无法满足多样化工作负载的性能需求。结合内存低延迟与磁盘高容量的混合存储架构提供了一种很有前景的折中方案。然而，在此类环境中部署智能学徒索引（尤其是在动态且复杂的工作负载下）仍面临严峻挑战。高效的解决方案必须在有限的资源内管理大于内存的数据集，支持动态更新，并允许并发操作，而现有方法无法同时满足这些要求。该研究提出了 LUCID，一种用于大于内存数据管理的、可更新且支持并发的智能学徒索引。LUCID 是一种学徒树结构，用于对跨越内存和磁盘的数据进行索引，为动态和并发工作负载提供鲁棒的支持。首先，该索引采用模型引导缓冲（Model-guided buffering）来优化内存中的插入操作。其次，该索引在叶子层引入了溢出策略（Overflow strategy），以降低更新期间结构修改的成本。第三，该索引采用扁平化设计（Flattened design），在最小化内存开销的同时，能够更精确地追踪磁盘上的数据。最后，LUCID 结合了专为大于内存系统定制的轻量级乐观锁机制，从而实现了高效的并发访问。开源链接：https://github.com/chaohcc/LUCID",
-  "link": "https://github.com/chaohcc/LUCID/blob/main/ICDE_2026_LUCID.pdf",
-  "tags": ["学习型索引", "混合存储架构", "乐观并发控制(OCC)", "数据库内核存储引擎"]
-},
-  {
-    "id": 66,
-    "title": "CoLSE: A Lightweight and Robust Hybrid Learned Model for Single-Table Cardinality Estimation using Joint CDF",
-    "recommendation": 4,
-    "authors": "Lankadinee Rathuwadu, Christopher Leckie, Guanli Liu, Renata Borovica-Gajic",
-    "affiliation": "The University of Melbourne（墨尔本大学）",
-    "abstract": "单表基数估计需平衡准确性、推理效率、训练时间和内存占用。CoLSE提出基于Copula的混合学习框架：1）基于D-vine Copula的联合概率估计器（JPE）：直接建模联合CDF而非PDF，利用Sklar定理和D-vine结构将多维联合CDF分解为边际CDF与二元copula的组合，避免蒙特卡洛采样，推理延迟<1.5ms，模型大小<3MB；2）误差补偿网络（ECN）：4层全连接网络学习JPE的系统偏差，分离幅度和符号预测以保守校正，无需超参数调优；3）PCHIP样条边际CDF建模+离散/分类属性去量化：使copula模型扩展到混合类型属性。在Census、Forest、Power、DMV等4个真实数据集上，CoLSE在所有数据集上均匹配或超越最强基线（峰值准确率95.79%），推理<1.5ms，训练<5分钟，模型<3MB，20GB TPC-H上训练仅~10分钟。",
-    "link": "https://arxiv.org/pdf/2512.12624",
-    "tags": ["基数估计", "学习型索引", "查询优化"]
-  },
-  {
-    "id": 68,
-    "title": "GRACE: Alleviating Reconstruction Cost in Dynamic Graph Processing Systems",
-    "recommendation": 3,
-    "authors": "Hongru Gao, Shuhao Zhang, Xiaofei Liao, Hai Jin",
-    "affiliation": "Huazhong University of Science and Technology（华中科技大学）",
-    "abstract": "动态图处理常用 PMA+CSR 混合架构平衡更新与计算效率，但预留空间耗尽时的全局重建开销极高，占更新总耗时 35.4%-51.5%。传统优化方案要么牺牲内存连续性降低缓存效率，要么未利用图结构特性，优化空间受限。本文提出GRACE，一款面向 PMA 基动态图系统的轻量化插件，通过两大核心策略优化重建：一是属性引导预留，按更新频率划分冷热区域，适配差异化迁移策略；二是堂亲和感知重平衡，按顶点影响范围限制重平衡规模，减少冗余数据移动。在 PPCSR、Terrace、VCSR 等主流系统上实验，GRACE 使重建提速 2.43-10.34 倍，整体更新效率提升 1.03-1.43 倍，内存开销仅增 4.1%-5.9%，同时小幅提升 BFS、PR 等图计算性能，适配大规模动态图场景。开源链接：https://github.com/intellistream/GRACE",
-    "link": "https://shuhaozhangtony.github.io/contents/research_papers/2026/2026_grace_icde_2026.pdf",
-    "tags": ["动态图处理", "图存储", "内存管理"]
-  },
- 
- 
-  {
-    "id": 73,
-    "title": "Robust Index Benefit Estimation via Hierarchical and Two-dimensional Feature Representation",
-    "recommendation": 4,
-    "authors": "Tao Li, Feng Liang, Jinqi Quan, Zihang Yang, Teng Wang, Runhuai Huang, Xiping Hu, Meng Li, Haipeng Dai",
-    "affiliation": "China Telecom（中国电信）, Shenzhen MSU-BIT University（深圳北理莫斯科大学）, Nanjing University（南京大学）",
-    "abstract": "近年来，基于机器学习的索引顾问因其无需通过假设优化器实际评估索引即可估算其收益而取得了成功。然而，现有方法往往无法充分捕捉索引相关特征，导致准确性有限，且对工作负载、模式或数据的变化适应性较差。为了应对这些挑战，该研究提出了EDDIE，一种基于分层二维编码的新型索引收益估算方法。该方法根据列在查询和索引中的位置对其进行编码，将索引相关特征整合为紧凑的表示，并利用二维注意力机制对查询计划结构和索引交互进行建模。最终，EDDIE可以无缝集成到实际系统中的现有索引顾问中。大量的评估表明，EDDIE在准确性和鲁棒性方面均显著优于现有最先进的估算方法。论文通过精细捕获位置约束、复合谓词和执行计划树节点特征（如Limit和Union），相比传统方法在估计误差上最高可缩减70%以上，且依托预训练与微调机制实现了优异的跨数据集漂移容忍力。开源链接：https://github.com/quanjnq/Eddie",
-    "link": "https://liangfengsid.github.io/paper/eddie_icde25.pdf",
-    "tags": ["AI驱动优化器", "智能索引顾问", "数据库自治调优", "代价模型预测"]
-  },
-{
-    "id": 74,
-    "title": "MTC: Scalable Transaction Commit for Multi-Master Cloud Databases",
-    "recommendation": 4,
-    "authors": "Kecheng Luo, Xiaoxian Wei, Wenxin Liu, Peng Cai, Aoying Zhou, Hui Li, Le Cai",
-    "affiliation": "East China Normal University（华东师范大学）, Guizhou University（贵州大学）, ByteDance Inc（字节跳动）",
-    "abstract": "MTC 是一种新型的分布式事务提交协议，旨在显著提升采用存算分离架构的多主（Multi-Master）云数据库的写入可扩展性与性能。它通过实现跨多个主节点的高效、一致的分布式写入，并在保障高吞吐的同时确保顺序一致性隔离级别，从而彻底解决了传统多主架构系统中的提交瓶颈。该系统核心包含三大创新技术：1. 检查后复制工作流（Check-then-Replicate Workflow）：MTC 引入了一种高效的检查后复制范式，将全局事务排序与底层日志同步进行了解耦。事务首先在本地进行轻量级验证，只有确认已提交的日志才会异步广播到其他存算节点，从而大幅节省网络带宽并降低长尾提交延迟；2. 异步全局排序（Asynchronous Global Ordering）：各主节点能够以异步方式从中央生成器预取全局事务序列号 (GTSN)，并在事务进入本地提交阶段时快速将其分配给本地事务，这种主动设计有效地隐藏了全局网络往返延迟，防止提交线程因网络阻断而阻塞；3. 流水线式行级冲突检测（Pipelined Row-level Conflict Detection）：MTC 对多主已提交事务日志 (MCTL) 的本地副本执行极为细粒度的行级并发冲突检测，整个过程采用紧凑的流水线式设计，将大密度的计算与网络 I/O 通信重叠进行，从而完全隐藏了因获取缺失日志带来的二次网络延迟。MTC 以非侵入式插件的形式在主流开源数据库 MySQL 上进行了工程实现，无需对底层原生存储引擎或特定专用硬件进行任何侵入式修改即可无缝调整与扩展。开源链接：https://github.com/luokeyue/MTC。",
-    "link": "",
-    "tags": ["多主架构(Multi-Master)", "云原生数据库", "分布式事务提交", "高并发吞吐"]
-  },
-  
-  {
-    "id": 75,
-    "title": "EC-RAG: Towards Efficient Edge-Cloud Retrieval-Augmented Generation Systems",
-    "recommendation": 4,
-    "authors": "Liang Wang* (Huazhong University of Science and Technology), Kai Wang (Huazhong University of Science and Technology), Ranjun Jia (Huazhong University of Science and Technology), Kai Lu (Huazhong University of Science and Technology), Jiguang Wan (Huazhong University of Science and Technology), Hao Huo (PingCAP), Yulong Zhai (PingCAP), Zhiyuan Liang (PingCAP), Di Wang (PingCAP)",
-    "affiliation": "Huazhong University of Science and Technolog（华中科技大学），PingCAP（平凯）",
-    "abstract": "检索增强生成（RAG）是缓解大模型幻觉、落地行业知识库的关键技术，但现有部署存在纯云端调用成本高昂、纯边缘小模型（SLM）问答精度不足的矛盾。针对该云边部署痛点，本文依托 ICDE 研究工作，提出EC-RAG 云边协同 RAG 架构。方案依托自适应查询路由机制作为调度核心，依据查询复杂度自动分流：简单任务由边缘小模型本地推理，复杂需求按需调用云端大模型；搭配动态片段剪枝技术精简输入上下文，削减无效文本带来的推理开销，并辅以边缘硬件优化提升本地执行效率。多权威数据集实验表明，相较于纯边缘方案，该架构 F1 指标提升 30%；对比全云端部署可节约 90% 接口调用开销，在低延迟、低成本前提下实现逼近大模型的生成效果，有效平衡边缘 RAG 落地的精度、时延与成本难题。",
-    "link": "",
-    "tags": ["检索增强生成RAG", "云边协同"]
-  },
-   
-  {
-    "id": 77,
-    "title": "CYANSQL: Unlock the Power of NL2SQL via Clustering-based Test-Time Scaling",
-    "recommendation": 4,
-    "authors": "Haoyu Qin, Tonghui Ren, Zhenying He, X.Sean Wang, Jiashu Xing, Yanghuan Ye, Shifei Huang, Jinbao Li",
-    "affiliation": "Fudan University（复旦大学）, Tencent Cloud（腾讯云）, Qilu University of Technology（齐鲁工业大学）",
-    "abstract": "面对复杂的多表关联与领域专属模式，大语言模型（LLM）直接生成 SQL 的准确率在长尾场景下仍存在盲区。该研究提出了一种基于推理期扩展（Test-Time Scaling）的高效 NL2SQL 生成系统 CYANSQL。系统核心引入了一种聚类驱动的候选生成与剪枝机制，在推理阶段动态扩展采样空间，并利用模型自信度与结构相似度聚类对候选 SQL 结果流进行多轮校准过滤与精炼，极大缓和了推理资源消耗与准确率收益之间的平衡难题，显著降低了多表 JOIN 以及复杂嵌套子查询在智能数据库交互和AI自动化运维中的报错率。该研究在主流评测数据集 BIRD 上取得 87.22% 召回率（比行业最佳提升近5%），和73.47%准确率，有效提升了 NL2SQL 系统在复杂逻辑组合、候选生成多样性和最终 SQL 选择准确性方面的表现。",
-    "link": "",
-    "tags": ["NL2SQL引擎", "推理期扩展(Test-Time)", "智能数据库交互", "AI数据库运维"]
-  },
-  {
-    "id": 84,
-    "title": "Astraea: Efficient Pipelined Micro-batch Stream Processing with Non-hash Differentiated Partitioning",
-    "recommendation": 4,
-    "authors": "Sijie Wu, Hanhua Chen, Hai Jin, Haoran Cai",
-    "affiliation": "Huazhong University of Science and Technology（华中科技大学）, Huawei Technologies Co., Ltd（华为技术有限公司）",
-    "abstract": "真实世界中的数据存在倾斜分布特征，现有流处理系统基于哈希的数据划分方式会导致同一个计算阶段内不同任务上负载不均，负载较低的任务执行较快，而执行完成后任务上空闲的计算资源无法被利用。针对计算资源利用受限的问题，该研究提出了一种数据频率感知的差异化数据划分机制 Astraea。首先，该研究通过对数据分布特征进行分析，揭示了基于哈希的数据划分策略会导致不同任务上负载倾斜的问题。然后，利用流水线并行的思想，提出了基于数据频率信息确定划分策略的理念。为了避免全局统计中间级数据频率的开销，该研究设计了差异化数据划分方法，对于少数高频键值，利用数据缓存阶段就可用的输入数据统计信息，而对于其余的大部分低频键值，则利用精确的 map 本地中间级数据统计信息。最后，在 Spark Streaming 上实现了 Astraea，并使用不同的大规模真实数据集进行评估，结果表明，与最先进的设计相比，Astraea 将计算任务的负载倾斜程度降低了 42%，并将系统吞吐量提高了 27%。",
-    "link": "",
-    "tags": ["微批流处理", "动态负载均衡", "差异化数据划分", "非哈希分区机制"]
-  },
-  
-  {
-    "id": 86,
-    "title": "PC-PS: A Multi-Dimensional Point-Cloud Data Publish/Subscribe System",
-    "recommendation": 3,
-    "authors": "Yuanchi Fan, Lisi Chen, Shuo Shang, Christian Jensen",
-    "affiliation": "UESTC（电子科技大学）, Aalborg University（奥尔堡大学）",
-    "abstract": "随着大规模点云数据（如自动驾驶、遥感）的出现，如何实现高效、低延迟的动态持续性查询成为数据管理中的难点问题。该研究提出了一个多维点云数据发布/订阅系统 PC-PS，该系统通过构建反向包围盒分层索引并引入空间感知混合查询注册策略，以及结合索引结构-查询状态同步更新的两阶段批量发布机制，确保了数据-查询匹配的低延迟、动态更新。针对有限内存下的响应时间约束，PC-PS 采用守护线程自适应维护索引局部结构与数据缓存时间。此外，该研究还提出一种基于查询水平分表与索引工作负载评估的并行发布算法，优化了多核并行时的负载均衡和负载迁移过程。真实世界数据集上的实验结果充分验证了该框架在响应延迟和系统吞吐量优化方面的有效性。",
-    "link": "",
-    "tags": ["多维点云数据库", "发布订阅系统", "反向包围盒索引", "动态空间查询"]
-  },
-  {
-    "id": 89,
-    "title": "SHMemora: Protective Key-Value Store on Distributed Shared Memory",
-    "recommendation":4,
-    "authors": "Jiajun Luo, Siyu Lin, Yunpeng Xu, Shengwei Liu, Jin Xia, Dong Liu, Zheng Liu, Huanchen Zhang, Teng Ma, Shuwen Deng",
-    "affiliation": "Tsinghua University（清华大学）, Cornell University（康奈尔大学）, Shenzhen Longsys Electronics Co., Ltd.（朗科电子）, Alibaba Group（阿里巴巴）",
-    "abstract": "现代内存键值存储（IMKVS）对于数据密集型应用至关重要，但日益受到内存容量的限制。传统通过 TCP/IP 或 RDMA 进行横向扩展的方式会带来高昂的网络延迟 and 数据移动开销。新兴的 CXL（Compute Express Link）技术实现了跨主机的近乎本地延迟的共享内存，为横向扩展 IMKVS 提供了可行的路径。然而，现有的基于 CXL 的系统普遍优先考虑性能而忽略了安全性，导致共享内存暴露在未授权访问的风险之中。为了应对这些挑战，该研究提出了 SHMemora，这是基于 CXL 共享内存在相干分布式共享内存（DSM）环境中构建的安全多主机内存键值存储系统。SHMemora 解决了严格保护强化、细粒度内存保护以及可扩展元数据管理这三个核心挑战。该系统分别通过基于 Intel MPK 的内存隔离、基于能力的保护机制以及元数据批量处理解决了上述问题。该研究在真实的 CXL 硬件上实现了 SHMemora，并通过形式化证明和渗透测试验证了其安全性，同时通过微基准测试和真实工作负载评估了其性能。实验表明，该系统具有强保护保证和实用可扩展性，在多主机环境下达到了 Redis 平均 3.45 倍的吞吐量，而安全保护带来的吞吐量开销平均仅为 1.68%。",
-    "link": "",
-    "tags": ["CXL新型硬件", "内存隔离(Intel MPK)", "键值存储引擎", "分布式共享内存"]
-  },
-
-  {
-    "id": 92,
-    "title": "Data Guard: A Fine-grained Purpose-based Access Control System for Large Data Warehouses",
-    "recommendation": 3,
-    "authors": "Khai Tran, Sudarshan Vasudevan, Pratham Desai, Alex Gorelik, Mayank Ahuja, Athrey Yadatore Venkateshababu, Mohit Verma, Dichao Hu, Walaa Eldin Moustafa, Vasanth Rajamani, Ankit Gupta, Issac Buenrostro, Kalinda Raina, Yanwen Lin",
-    "affiliation": "LinkedIn Corporation（领英）, OpenAI, Anthropic",
-    "abstract": "近年来，数据保护法规层出不穷，与此同时，大型企业对数据的需求也与日俱增，这给企业合规带来了巨大挑战。为了应对这一矛盾，该研究推出了 Data Guard——一个面向大型数据仓库的细粒度、基于用途的访问控制系统。Data Guard 支持基于数据语义描述和数据访问目的来编写策略。然后，Data Guard 将这些策略转换为 SQL 视图，从而屏蔽底层仓库表中的数据。在访问时，Data Guard 会根据访问目的，透明地将每次表访问路由到相应的数据屏蔽视图，从而确保合规性，并最大限度地降低在现有应用程序中部署 Data Guard 的工作量。该研究所提出的强制执行解决方案能够以比传统解决方案更精细的粒度屏蔽数据。除了行级和列级数据屏蔽之外，Data Guard 还可以对包含非原子数据类型（例如结构体、数组和映射）的列进行子单元格级别的数据屏蔽。这种细粒度的屏蔽使 Data Guard 能够在确保合规性的同时，保留数据的实用性。该研究实施了多项性能优化措施，以最大限度地降低数据脱敏操作的开销。通过大量的实验，影响数据脱敏开销的关键因素得到了确定，并且该实现方案的效率也得到了验证。Data Guard 已部署在 LinkedIn 的生产数据仓库中，确保每天跨不同数据处理引擎的超过 20,000 次表访问符合规范。为适应复杂异构计算流，系统额外针对其内部重写优化引擎在 Spark 和 Presto 的物理计划拦截层进行了透明注入优化，消除了因大规模复杂视图嵌套引起的下推失效问题。",
-    "link": "https://arxiv.org/pdf/2502.01998",
-    "tags": ["动态数据脱敏", "隐私合规", "复杂数据类型屏蔽", "透明视图路由"]
-  },
-  
-  {
-    "id": 95,
-    "title": "GPU-Accelerated OLTP: An In-Depth Analysis of Concurrency Control Schemes [Experiment, Analysis, and Benchmark]",
-    "recommendation": 5,
-    "authors": "Zihan Sun, Yuyu Luo, Yong Zhang, Chao Li, Chunxiao Xing",
-    "affiliation": "Tsinghua University（清华大学）, HKUST(GZ)（香港科技大学（广州））",
-    "abstract": "过去十年间，GPU 在加速联机分析处理（OLAP）任务上展现出巨大潜力。但 GPU 在联机事务处理（OLTP）场景的落地仍存在明显短板，业界长期认为 GPU 并不适合承载这类负载。尽管存在这一固有认知，GPU 具备海量并行计算能力与超高内存带宽，能够同时处理上万笔事务，因此具备成为 OLTP 加速硬件的巨大潜力。并发控制协议是决定 OLTP 系统性能的核心组件，而 GPU 与 CPU 架构存在本质差异，各类并发控制协议在 GPU 上的运行表现会截然不同。由此引出一个核心研究问题：专为 CPU 设计的并发控制协议，迁移至 GPU 环境后适配效果如何？为解答该问题，该研究推出gCCTB—— 业内首个面向 GPU 并发控制协议评测的测试平台。该研究基于 YCSB、TPC-C 两大标准基准测试集，在不同数据竞争强度、不同 GPU 硬件配置下，完整实现并对比评测了八种并发控制方案：其中六种是经典 CPU 专用协议，另外两种为 GPU 原生定制协议。实验结果表明：GPU 专属优化协议并非在所有场景下都能优于面向 CPU 设计的协议，在特定负载与竞争强度下前者性能反而落后。除此之外，GPU 硬件特有参数（例如每个线程束的线程数量、每个线程块的线程束数量）会极大影响整体性能，必须经过精细调优。最后研究发现，冲突处理开销是制约 CPU 并发协议在 GPU 上运行效率的关键瓶颈；乐观并发控制能持续压低该项开销，在全部测试负载下性能均优于其余 CPU 向并发协议。",
-    "link": "https://www.semanticscholar.org/paper/GPU-Accelerated-OLTP%3A-An-In-Depth-Analysis-of-Sun-Luo/0a5d7963b0bfcc7d763fb8c73b16caee0224df34",
-    "tags": ["GPU加速OLTP", "并发控制协议(2PL/OCC)", "异构计算内核", "高通量事务处理"]
-  },   
- 
-  {
-    "id": 102,
-    "title": "Text2VectorSQL: Towards a Unified Interface for Vector Search and SQL Queries",
-    "recommendation": 4,
-    "authors": "Zhengren Wang, Dongwen Yao, Bozhou Li, Dongsheng Ma, Bo Li, Zhiyu Li, Feiyu Xiong, Bin Cui, Linpeng Tang, Wentao Zhang",
-    "affiliation": "Peking University(北京大学)，Shanghai Jiao Tong University(上海交通大学)，Institute for Advanced Algorithms Research, Shanghai(上海高等算法研究院)，OriginHub(OriginHub)",
-    "abstract": "Text-to-SQL系统已在结构化数据查询中取得进展，但面对非结构化语义查询时存在本质盲区；向量搜索虽已成为查询非结构化数据的事实标准，但与SQL的集成(VectorSQL)仍在手动编写查询阶段，且缺乏标准化评测方法，导致统一自然语言接口的构建存在根本性空白。为此，该研究首次形式化定义了Text2VectorSQL任务，旨在建立统一的结构化与非结构化数据自然语言查询接口，并为此构建了完整的基础生态系统。在架构层面，该生态系统包含三项核心组件：1）VectorSQLGen数据合成流水线：通过混合数据库增强、复杂度感知的查询合成、语义感知的回翻译以及链式思维精炼四阶段流程，自动生成高质量的训练四元组，解决训练数据极度匮乏的问题；2）VectorSQLBench评测基准：覆盖SQLite、PostgreSQL、ClickHouse三种后端与BIRD、Spider、arXiv、Wikipedia四种数据源的12种组合，共2997条经人工审核的高质量样本，并配有集合型分数、排序型分数及分解准确率等多维度评测指标；3）UniVectorSQL模型家族：基于合成数据训练的7B/14B/32B规模模型，结合混合训练策略在新能力获取与既有SQL能力保持之间取得平衡。在VectorSQLBench上的评测中，UniVectorSQL-32B以42.7的nDCG@10达到开源最优，并略优于GPT-4o(42.0)，执行成功率93.9%也优于GPT-4o的88.8%。更重要的是，实验揭示了recall degradation挑战：在后过滤执行策略下，涉及JOIN操作的复杂查询可导致超过30%的正确结果被静默丢弃，PostgreSQL的迭代索引扫描机制可部分缓解但未根本解决。论文在最后还系统分析了向量过滤条件下关系算子与高维索引联合扫描的最优代价边界。开源链接：https://github.com/OpenDCAI/Text2VectorSQL",
-    "link": "https://arxiv.org/pdf/2506.23071",
-    "tags": ["Text-to-SQL", "向量搜索", "向量数据库", "自然语言接口"]
-  },
-  {
-    "id": 103,
-    "title": " AGRAG: Advanced Graph-based Retrieval-Augmented Generation for LLMs",
-    "recommendation": 4,
-    "authors": "Yubo Wang* (HKUST), Haoyang Li (The Hong Kong Polytechnic University), Fei Teng (HKUST), lei Chen (HKUST & HKUST(GZ))",
-    "affiliation": "Peking University(北京大学)，Shanghai Jiao Tong University(上海交通大学)，Institute for Advanced Algorithms Research, Shanghai(上海高等算法研究院)，OriginHub(OriginHub)",
-    "abstract": "基于图的检索增强生成（Graph-based RAG）在利用结构化知识增强大语言模型（LLMs）方面展现出巨大潜力。然而，现有方法面临三大关键挑战：一是由大语言模型幻觉导致的**图构建不准确**；二是因未能生成明确的推理依据向大语言模型说明选取特定文本块的原因，导致**推理能力不足**；三是大语言模型推理能力欠缺使得回答**不够充分**，仅能部分回应查询，这使得其在部分任务上的性能落后于朴素检索增强生成（NaiveRAG）。 为解决这些问题，我们提出了AGRAG，一种先进的基于图的检索增强生成框架。在图构建阶段，AGRAG用基于统计的方法替代了广泛使用的大语言模型实体提取方法，避免了幻觉和错误传播。在检索阶段，AGRAG将图推理过程建模为**最小成本最大影响力（MCMI）子图生成问题**，即优先纳入影响力得分高的节点，同时尽可能降低边的成本，使生成的推理路径更全面。我们证明该问题属于NP难问题，并提出了一种贪心算法求解。生成的MCMI子图可作为明确的推理路径，向大语言模型说明选取特定文本块的原因，从而帮助大语言模型更聚焦于文本块中与查询相关的内容，降低噪声的影响，提升AGRAG的推理能力。此外，相较于简单的树结构推理路径，我们的MCMI子图支持环等更复杂的图结构，能提升生成推理路径的全面性。AGRAG的代码和提示词已在以下地址开源：https://github.com/Wyb0627/AGRAG。",
-    "link": "https://arxiv.org/html/2511.05549v2",
-    "tags": ["GRAG", "向量搜索", "向量数据库"]
-  },
-  {
-    "id": 106,
-    "title": "Efficient Cloud-edge Collaborative Approaches to SPARQL Queries over Large RDF graphs",
-    "recommendation": 3,
-    "authors": "Shidan Ma, Peng Peng, Xu Zhou, M. Tamer Özsu, Lei Zou, Guo Chen",
-    "affiliation": "Hunan University（湖南大学）, University of Waterloo（滑铁卢大学）, Peking University（北京大学）",
-    "abstract": "随着资源描述框架（RDF）图数据的日益普及，使用 SPARQL 进行此类数据的存储和查询仍是一个关键问题。当前的流解决方案依赖于云端数据管理架构，但在带宽有限或系统负载过高的环境中往往面临性能瓶颈。为了解决这一问题，该研究首次探索了引入边缘计算来将图数据存储和处理迁移到边缘环境中，从而提升查询性能。这种方法需要将查询处理卸载到边缘服务器，这涉及应对两项挑战：数据本地化和网络调度。首先，数据本地化挑战在于计算边缘服务器上维护的子图，以快速识别能够处理特定查询的服务器。为了应对这一挑战，该研究引入了模式诱导子图（Pattern-induced Subgraphs）的新概念。其次，网络调度挑战涉及将查询高效分配给边缘和云服务器，以优化整体系统性能。该研究通过构建一个共同捕获数据分布、查询特征、网络通信和计算资源的全局系统模型来解决该问题。据此，该研究进一步提出了查询分配与计算资源分配的联合公式化表述，将其建模为混合整数非线性规划（MINLP）问题，并使用改进的分支定界算法求解该问题。在真实云平台下的真实数据集上的实验结果表明，该研究所提出的方法在效率上优于最先进的基线方法。开源链接：https://github.com/msd673/edgeComputing_gurobi",
-    "link": "https://arxiv.org/pdf/2601.15992",
-    "tags": ["SPARQL查询优化", "云边协同架构", "RDF图数据库", "混合整数非线性规划"]
-  },
-
-  {
-    "id": 122,
-    "title": "Tetris: Lightweight Hyperparameter Auto-Tuning for Mitigating Performance Spikes in LSM-KVS",
-    "recommendation": 4,
-    "authors": "YINA LV, Wenhao Zhu, Qiao Li, Quanqing Xu, Congming Gao, Chuanhui Yang, Xiaoli Wang, Chun Jason Xue",
-    "affiliation": "Xiamen University(厦门大学)，Mohamed bin Zayed University of Artificial Intelligence(穆罕默德·本·扎耶德人工智能大学)，Ant Group(蚂蚁)",
-    "abstract": "针对 LSM-tree 键值存储后台合并任务抢占软硬件资源引发的性能尖峰痛点，现有静态调优、LLM 调优等方案存在适配差、开销大、响应滞后等缺陷，论文提出轻量化 Tetris 超参自动调优框架，实现由被动修复转向主动预判优化。框架分三层：基于滑动窗口统计的分级触发模块区分轻重尖峰、动态启停快慢调优；负载感知筛选器依据读写、随机度等特征精简待调参数集；资源感知调优器按需线性或指数步长改参、性能回稳后参数回落。多基准测试表明，相较 ADOC 算法，方案平均延迟下降 18%，吞吐量提升 38%，显著抑制系统性能抖动。",
-    "link": "",
-    "tags": ["KV存储", "LSM-tree", "参数调优"]
-  },
-  {
-    "id": 127,
-    "title": "Hexgen-Flow: Optimizing LLM Inference Request Scheduling for Agentic Text-to-SQL",
-    "recommendation": 4,
-    "authors": "You Peng (Hong Kong University of Science and Technology, Youhe Jiang (Hong Kong University of Science and Technology, Wenqi Jiang, Chen Wang, Binhang Yuan (Hong Kong University of Science and Technology",
-    "affiliation": "HKUST(香港科技大学)，ETH Zurich(苏黎世联邦理工学院)，Tsinghua University(清华大学)",
-    "abstract": "基于智能体的Text-to-SQL系统虽提升了自然语言转SQL的能力，但在生产环境中部署面临多阶段依赖、严格延迟要求及异构GPU集群复杂性等瓶颈。现有LLM服务框架主要面向独立推理任务，难以有效处理Text-to-SQL工作流中的阶段间依赖和端到端SLO保障。研究提出HEXGEN-FLOW框架，面向异构GPU集群上多租户智能体Text-to-SQL工作流的调度与执行，核心采用两层调度架构：全局负载均衡调度器联合考虑请求计算需求与实例服务能力及当前负载，实现异构感知的任务分配；局部紧迫度优先队列基于每请求SLO预算与估计执行时间动态排序，并在批次边界处持续重排，紧迫度随等待时间单调递增，避免饥饿。此外，提出基于滑动窗口监控与仿真...后过滤执行策略下，涉及JOIN操作的复杂查询可导致超过30%的正确结果被静默丢弃，PostgreSQL的迭代索引扫描机制可部分缓解但未根本解决。开源链接：https://github.com/OpenDCAI/Text2VectorSQL。",
-    "link": "https://arxiv.org/pdf/2505.05286",
-    "tags": ["Text-to-SQL", "LLM推理调度", "请求调度"]
-  },
-  {
-    "id": 128,
-    "title": "Krone: Hierarchical and Modular Log Anomaly Detection",
-    "recommendation": 4,
-    "authors": "Lei Ma, Jinyang Liu, Tieying Zhang, Peter VanNostrand, Dennis Hofmann, Lei Cao, Elke Rundensteiner, Jianjun Chen",
-    "affiliation": "WPI(伍斯特理工学院)，ByteDance(字节跳动)，University of Arizona(亚利桑那大学)",
-    "abstract": "日志异常检测对揭示系统故障与安全风险至关重要，但日志以扁平序列存储时丢失了嵌套组件执行的层次结构，导致现有方法容易遗漏真实依赖、学习虚假跨事件依赖。研究提出KRONE框架，首次从扁平日志自动推导执行层次并利用其进行模块化多级异常检测。核心设计包括：KRONE日志抽象模型，通过实体-动作-状态三层语义模式从日志模板中提取应用特定的层次结构，并以命名实体识别任务形式借助LLM自适应实例化；TopDownSeqDecompose算法递归将日志序列分解为多级KRONE Seq，将序列级检测转化为模块化KRONE Seq级子任务；混合模块化检测机制在轻量级Local-Context检测器（快速模式匹配过滤已知正常模式）与Nested-Aware检测器（LLM语义推理处理未知案例）间动态路由，兼顾效率与准确性，并辅以缓存结果复用与早退优化。在BGL、HDFS、ThunderBird三个公开基准及ByteDance Cloud工业数据集上评测，KRONE的F1分数较现有方法提升10.07%（82.76%提升至92.83%），数据空间压缩达117.3倍，资源开销降低43.7倍，LLM调用仅占测试数据量的1.1%至3.3%。开源链接：https://github.com/LeiMa0324/Krone_official。",
-    "link": "https://arxiv.org/pdf/2602.07303v3",
-    "tags": ["日志分析", "异常检测", "层次化建模"]
-  },
-  {
-    "id": 129,
-    "title": "MINT: Multi-Vector Search Index Tuning",
-    "recommendation": 5,
-    "authors": "Jiongli Zhu, Yue Wang, Bailu Ding, Philip Bernstein, Vivek Narasayya, Surajit Chaudhuri",
-    "affiliation": "University of California, San Diego(加州大学圣地亚哥分校)，Microsoft Research(微软)",
-    "abstract": "多向量搜索在多模态和多特征场景中日益重要，但索引选择对查询性能影响甚大，而现有索引调优研究集中于关系数据库，多向量搜索索引调优尚属空白。研究定义了多向量搜索索引调优问题，并提出MINT框架加以求解。核心设计包括：多列索引与查询执行策略，允许查询利用其列子集上的多列索引和单列索引联合检索与重排序，相比每列一索引方式提升检索质量，相比每查询一索引方式节省存储；动态规划查询规划器，在有限relevant ek空间内求解最优查询计划，并证明查询规划问题为NP-hard；波束搜索配置选择器，在工作负载范围内探索索引组合空间，满足召回率与存储约束下最小化延迟，并证明配置搜索问题同样为NP-hard；采样式代价与召回率估计器，基于少量训练数据训练线性代价模型和对数召回率模型，避免昂贵的全量索引构建。在GloVe、SIFT、Yandex等半合成数据集及News、Amazon真实数据集上评测，MINT相比PerColumn基线实现2.1倍至8.3倍的延迟加速，推荐索引可在分钟级完成。",
-    "link": "https://arxiv.org/pdf/2504.20018",
-    "tags": ["向量索引", "多向量搜索", "索引调优"]
-  },
-  {
-    "id": 130,
-    "title": "LLM4Hint: Leveraging Large Language Models for Hint Recommendation in Offline Query Optimization",
-    "recommendation": 5,
-    "authors": "Suchen Liu, Yang Lin, Yinjun Han, Jun Gao",
-    "affiliation": "Peking University(北京大学)，ZTE Corporation(中兴)",
-    "abstract": "传统查询优化器面对复杂工作负载需大量人工调参，学习型优化器则受限于泛化能力不足。若直接将大语言模型（LLM）引入查询优化，又将遭遇推理延迟高、LLM词元序列与树结构执行计划间语义鸿沟导致微调代价大且效果欠佳的双重困境。针对上述问题，研究聚焦于离线场景下重复查询的提示推荐任务以规避延迟约束，提出LLM4Hint框架，以中等规模LLM为骨干进行查询优化提示推荐。该框架包含三项核心设计：其一，引入轻量模型将数据分布与谓词特征编码为软提示，在为LLM提供充足优化信息的同时缩减输入上下文长度；其二，借助更大规模商用LLM将SQL改写为自然语言描述，降低骨架LLM对SQL语义的理解难度与微调开销；其三，在提示中添加显式匹配文本以建立软提示与SQL表名之间的对应关系，加速两个模型的嵌入空间对齐并提升泛化能力。在JOB-Q、TPC-DS-Q和Stack Overflow三个数据集上的实验表明，LLM4Hint在SU和GMRL指标上均优于Bao、Lero、FASTgres等已有学习型选择方法，其中在JOB-Q上SU达1.70（较最佳竞品提升22.0%），GMRL为0.79（降低8.1%）；在TPC-DS-Q上SU达1.86（提升6.3%）。开源链接：https://anonymous.4open.science/r/LLM4Hint-E60F/。",
-    "link": "https://arxiv.org/pdf/2507.03384",
-    "tags": ["查询优化", "Hint推荐", "LLM应用"]
-  },
-
-  {
-    "id": 138,
-    "title": "BOND: A Co-Designed Framework for LLM-Powered Analytics Over Relational Data",
-    "recommendation": 4,
-    "authors": "Lixiang Chen, Qin Zheng, Zhicheng Pan, Chengcheng Yang, Rong Zhang, Xuan Zhou",
-    "affiliation": "East China Normal University(华东师范大学)",
-    "abstract": "",
-    "link": "",
-    "tags": ["LLM数据分析", "关系数据", "自然语言查询"]
-  },  
-   
-  {
-    "id": 145,
-    "title": "ImmortalChopper: Real-Time and Resilient Distributed Transactions in the Edge-Cloud",
-    "recommendation": 3,
-    "authors": "Juncheng Fang, Farzad Habibi, Binbin Gu, Faisal Nawab",
-    "affiliation": "University of California, Irvine（加州大学欧文分校）",
-    "abstract": "该论文提出 ImmortalChopper，用于边缘-云环境中的实时、可恢复分布式事务处理。边缘节点数量大、网络连接慢且不稳定，传统 2PC 等协议需要多轮同步协调，难以满足实时响应需求。ImmortalChopper 的目标是 One-Node Response，即客户端只需联系一个节点即可获得事务提交保证，后续跨节点协调在后台惰性完成。方法结合 transaction chopping 与 lazy replication，并提出 ChopperGraph 理论处理惰性复制和推测执行下的陈旧状态问题，从而在保持串行化的同时提升响应速度和容错能力。实验显示，该协议能够在边缘场景中实现实时提交响应，并在节点失败后快速恢复。",
-    "link": "https://tuzijun111.github.io/paper/ImmortalChopper.pdf",
-    "tags": [
-      "分布式事务",
-      "边缘计算",
-      "事务切分",
-      "惰性复制",
-      "容错"
-    ]
-  },
-  {
-    "id": 149,
-    "title": "Distance Comparison Operations Are Not Silver Bullets in Vector Similarity Search: A Benchmark Study on Their Merits and Limits [Experiment, Analysis, and Benchmark]",
-    "recommendation": 3,
-    "authors": "Zhuanglin Zheng, Yuxiang Zeng, Chenchen Liu, Yunzhen Chi, Binhan Yang, Yongxin Tong",
-    "affiliation": "Beihang University（北京航空航天大学）",
-    "abstract": "该论文系统评测向量相似搜索中的距离比较操作优化方法。Distance Comparison Operation (DCO) 通过避免完整维度距离计算来判断向量与查询是否满足阈值条件，被认为是提升向量数据库性能的重要算子级优化。论文在 10 个数据集、最高 1 亿向量和 12288 维、CPU/SIMD/GPU 等硬件设置上评测 8 类 DCO 算法。实验表明，DCO 并非通用加速方案，其性能对维度、查询分布和硬件配置高度敏感，在分布外查询或特定硬件上会慢于完整维度扫描。同时，DCO 在索引构建和数据更新中具有可观收益。该 benchmark 为生产向量数据库中是否采用 DCO 提供了系统证据和选择指南。",
-    "link": "https://arxiv.org/pdf/2604.02801",
-    "tags": [
-      "向量数据库",
-      "相似搜索",
-      "距离计算",
-      "Benchmark",
-      "SIMD/GPU"
-    ]
-  },
-  
-  {
-    "id": 153,
-    "title": "UTune: Towards Uncertainty-Aware Online Index Tuning",
-    "recommendation": 4,
-    "authors": "Chenning Wu, Sifan Chen, Wentao Wu, Yinan Jing, Zhengying He, Kai Zhang, X. Sean Wang",
-    "affiliation": "Fudan University（复旦大学）, Microsoft Research（微软研究院）",
-    "abstract": "该论文提出 UTune，一个不确定性感知的在线索引调优框架。在线索引调优中，可用于训练的查询执行反馈有限，且工作负载会持续漂移，导致传统学习式索引收益估计器难以泛化到新查询。UTune 使用 operator-level 学习模型估计索引收益，并引入不确定性量化机制刻画有限反馈下估计结果的可靠性。框架进一步将不确定性纳入索引选择和配置枚举，设计带不确定性加权收益的 ε-greedy 搜索策略，以降低无效探索。实验表明，UTune 相比先进在线索引调优器能显著降低工作负载执行时间，减少索引探索开销，并在相对稳定的负载下更快收敛。",
-    "link": "https://arxiv.org/pdf/2601.18199",
-    "tags": [
-      "索引调优",
-      "在线优化",
-      "不确定性建模",
-      "数据库自治"
-    ]
-  },
- 
-  
-  {
-    "id": 155,
-    "title": "CARROT: A Learned Cost-Constrained Retrieval Optimization System for RAG",
-    "recommendation": 5,
-    "authors": "Ziting Wang, Haitao Yuan, Wei Dong, Gao Cong, Feifei Li",
-    "affiliation": "Nanyang Technological University（南洋理工大学）, Alibaba Group（阿里巴巴）",
-    "abstract": "该论文提出 CARROT，一个面向 RAG 的学习式成本约束检索优化系统。现有 RAG 通常独立选择 top-k 文档块，忽略块之间的冗余、顺序和组合效用；同时，加入更多上下文不一定提升答案质量，还会增加 token 成本。CARROT 使用 Monte Carlo Tree Search 搜索最优 chunk 组合顺序，将 chunk 相关性、冗余和预算约束纳入同一决策过程。系统还设计效用计算策略，在不必耗尽预算的情况下选择最有价值组合，并引入配置代理为不同查询域预测最优检索配置。实验显示，CARROT 在成本受限条件下显著提升 RAG 回答质量，相比基线最高带来约 30% 改进。",
-    "link": "https://arxiv.org/pdf/2411.00744",
-    "tags": [
-      "RAG",
-      "检索优化",
-      "成本约束",
-      "MCTS",
-      "LLM 应用"
-    ]
-  },
-
-  {
-    "id": 159,
-    "title": "CAMMSR: Category-Guided Attentive Mixture of Experts for Multimodal Sequential Recommendation",
-    "recommendation": 4,
-    "authors": "Jinfeng Xu, Zheyu Chen, Shuo Yang, Jinze Li, Hewei Wang, Yijie Li, Jianheng Tang, Yunhuai Liu, Edith Ngai",
-    "affiliation": "The University of Hong Kong（香港大学）, Beijing Institute of Technology（北京理工大学）, Carnegie Mellon University（卡内基梅隆大学）, Peking University（北京大学）",
-    "abstract": "该论文提出 CAMMSR，用类别引导的注意力混合专家模型改进多模态序列推荐。多模态推荐利用文本、图像等内容增强物品表示，但用户对不同模态的偏好会随物品类别和上下文变化，简单融合难以捕捉动态模态贡献和模态协同。CAMMSR 设计 category-guided attentive mixture of experts 模块，从多个专家视角学习物品表示，并通过辅助类别预测任务动态分配模态权重。论文进一步引入 modality swap 对比学习，在序列级增强中强化跨模态表示对齐。四个公开数据集实验显示，CAMMSR 在自适应模态融合、用户兴趣建模和推荐准确率方面均优于现有多模态序列推荐方法。",
-    "link": "https://arxiv.org/pdf/2603.04320",
-    "tags": [
-      "多模态推荐",
-      "序列推荐",
-      "Mixture of Experts",
-      "对比学习",
-      "类别引导"
-    ]
-  },
-  
-  {
-    "id": 160,
-    "title": "CactusDB: Unlock Co-Optimization Opportunities for SQL Queries and AI/ML Model Inferences",
-    "recommendation": 5,
-    "authors": "Lixi Zhou, Kanchan Chowdhury, Lulu Xie, Jaykumar Tandel, Hong Guan, Zhiwei Fan, Xinwei Fu, Jia Zou",
-    "affiliation": "Arizona State University（亚利桑那州立大学）, Meta, Amazon",
-    "abstract": "该论文提出 CactusDB，面向同时包含 SQL 查询和 AI/ML 推理的 inference queries 进行统一协同优化。数据库内模型推理可减少数据搬移、缓解隐私风险并降低系统运维复杂度，但现有系统通常只能支持部分优化策略，难以同时处理关系算子、表达式和 ML 函数。CactusDB 基于 Velox 构建，设计三层中间表示，统一表达关系操作、表达式操作和 ML 函数，从而支持关系代数优化、因子化推理、张量-关系转换及跨库优化。系统还提出基于 Monte Carlo Tree Search 的优化器，结合 query embedding 复用不同查询之间的优化知识。实验在 12 个代表性推理负载和 2000 个随机查询上显示，CactusDB 相比替代系统最高实现 441 倍加速。",
-    "link": "https://arxiv.org/pdf/2602.23469",
-    "tags": [
-      "SQL+AI",
-      "模型推理",
-      "查询优化",
-      "数据库系统",
-      "ML Serving"
-    ]
-  },
- 
- 
-  {
-    "id": 171,
-    "title": "WikiDBGraph: A Data Management Benchmark Suite for Collaborative Learning over Database Silos [Experiment, Analysis, and Benchmark]",
-    "recommendation": 4,
-    "authors": "Zhaomin Wu, Ziyang Wang, Bingsheng He",
-    "affiliation": "National University of Singapore（新加坡国立大学）",
-    "abstract": "该论文提出 WikiDBGraph，一个用于数据库孤岛上协同学习的数据管理基准套件。现实组织中的关系数据库往往分散、模式不对齐、实例重叠不完整，而现有联邦学习和分割学习基准常假设数据隔离、对齐且可 join，忽略端到端数据管理步骤。WikiDBGraph 从 10 万个真实关系数据库构建，包含 1700 万条加权边，并为数据库节点和关系边标注多种属性，以刻画实例级和特征级重叠。实验展示现有协同学习方法在真实数据孤岛条件下的有效性和局限，揭示 schema matching、fuzzy joining 和数据对齐等数据管理问题对协同学习部署的重要影响。",
-    "link": "https://arxiv.org/pdf/2505.16635",
-    "tags": [
-      "协同学习",
-      "联邦学习",
-      "数据库孤岛",
-      "Benchmark",
-      "数据管理"
-    ]
-  },
-  {
-    "id": 172,
-    "title": "Clue-RAG: Towards Accurate and Cost-Efficient Graph-based RAG via Multi-Partite Graph-based Index",
-    "recommendation": 4,
-    "authors": "Yaodong Su, Yixiang Fang, Yingli Zhou, Chuanhui Yang",
-    "affiliation": "The Chinese University of Hong Kong, Shenzhen（香港中文大学深圳）, OceanBase, Ant Group（蚂蚁集团 OceanBase）",
-    "abstract": "该论文提出 Clue-RAG，通过多部图索引和查询驱动迭代检索提升图 RAG 的准确性与成本效率。现有图 RAG 常受知识抽取不完整和检索阶段未充分利用查询信息影响，导致图质量与答案质量受限。Clue-RAG 构建包含文本 chunk、知识单元和实体的多部图索引，以多粒度方式捕获语义内容；同时采用混合抽取策略减少 LLM token 消耗，并保持知识单元的准确性与消歧能力。查询阶段使用 Q-Iter，将语义搜索和受约束图遍历结合以提升相关性。三个问答基准实验显示，Clue-RAG 显著超过现有图 RAG 基线，并在降低索引成本的同时提升 Accuracy 和 F1。",
-    "link": "https://arxiv.org/pdf/2507.08445",
-    "tags": [
-      "Graph RAG",
-      "多部图索引",
-      "查询驱动检索",
-      "LLM",
-      "成本优化"
-    ]
-  },
-  {
-    "id": 174,
-    "title": "LEAF-SQL: Level-wise Exploration with Adaptive Fine-graining for Text-to-SQL Skeleton Prediction",
-    "recommendation": 5,
-    "authors": "Zhao Tan, Xiping Liu, Qing Shu, Qizhi Wan, Dexi Liu, Changxuan Wan",
-    "affiliation": "Jiangxi University of Finance and Economics（江西财经大学）",
-    "abstract": "该论文提出 LEAF-SQL，将 Text-to-SQL skeleton prediction 重构为由粗到细的树搜索过程。现有 skeleton 方法通常只预测单一结构假设，且一次性生成较细粒度 skeleton，面对嵌套逻辑和多子句复杂查询时容易失败。LEAF-SQL 设计三层 skeleton hierarchy，引导候选从高层逻辑逐步细化；使用 Skeleton Formulation Agent 生成多样结构候选，并用 Skeleton Evaluation Agent 剪枝搜索空间，自适应决定候选应达到的细粒度。该设计能够在高置信场景利用更详细的结构约束，在不确定场景回退到更稳健的粗粒度 skeleton。实验表明，LEAF-SQL 稳定提升多种 LLM backbone 的 Text-to-SQL 表现，在 BIRD 官方隐藏测试集上达到 71.6% execution accuracy。",
-    "link": "https://arxiv.org/pdf/2605.09295",
-    "tags": [
-      "Text-to-SQL",
-      "SQL Skeleton",
-      "自适应搜索",
-      "LLM 数据库接口"
-    ]
-  },
-  {
-    "id": 175,
-    "title": "An Efficient and Effective Evaluator for Text2SQL Models on Unseen and Unlabeled Data",
-    "recommendation": 4,
-    "authors": "Khanh Trinh Pham, Thanh Tam Nguyen, Viet Huynh, Hongzhi Yin, Quoc Viet Hung Nguyen",
-    "affiliation": "Griffith University（格里菲斯大学）, Edith Cowan University（伊迪斯科文大学）, The University of Queensland（昆士兰大学）",
-    "abstract": "该论文提出 FusionSQL，用于在未见且无标签数据上评估 Text2SQL 模型。真实部署中，数据库结构和内容持续变化，人工 SQL 标签构建昂贵且受到隐私限制，因此很难在上线前及时判断模型是否适合目标数据库。FusionSQL 是一种 label-free、model-agnostic 评估框架，不依赖 ground-truth SQL 或答案，通过分析模型自身输出模式刻画目标数据集与训练数据之间的差异，并估计数据集级性能。该框架支持预发布检查、持续监控新数据库以及检测质量下降。多种应用设置和问题类型实验表明，FusionSQL 的估计结果能够较好跟随真实准确率，并可靠提示模型在新数据集上的风险。",
-    "link": "https://arxiv.org/pdf/2603.07841",
-    "tags": [
-      "Text2SQL",
-      "无标签评估",
-      "模型评估",
-      "泛化能力"
-    ]
-  },
-  {
-    "id": 176,
-    "title": "Boosting Small Language Models for Text-to-SQL with Fine-Grained Execution Feedback and Cost-Efficient Rewards",
-    "recommendation": 5,
-    "authors": "Thanh Dat Hoang, Thanh Trung Huynh, Matthias Weidlich, Thanh Tam Nguyen, Tong Chen, Hongzhi Yin, Quoc Viet Hung Nguyen",
-    "affiliation": "Griffith University（格里菲斯大学）, VinUniversity（VinUni）, Humboldt University of Berlin（柏林洪堡大学）, The University of Queensland（昆士兰大学）",
-    "abstract": "该论文提出 FINER-SQL，用细粒度执行反馈增强小语言模型的 Text-to-SQL 能力。大模型在 Text-to-SQL 上效果强，但成本、延迟和隐私风险高；小模型适合本地部署，却常因推理和指令跟随能力弱而生成错误 SQL。传统强化学习使用稀疏 0/1 执行正确奖励，错误 SQL 几乎没有学习信号，容易导致训练不稳定。FINER-SQL 基于 group relative policy optimization，用密集且可解释的奖励替代稀疏监督，包括 memory reward 用于对齐已验证推理轨迹并保持语义稳定，以及 atomic reward 根据操作级重叠为结构正确但不完整的 SQL 提供部分奖励。BIRD 和 Spider 实验显示，3B 模型可达到 67.73% 和 85% execution accuracy，并显著降低推理延迟。",
-    "link": "https://arxiv.org/pdf/2605.03465",
-    "tags": [
-      "Text-to-SQL",
-      "小语言模型",
-      "执行反馈",
-      "奖励学习",
-      "成本优化"
-    ]
-  },
+    {
+        "id": 2,
+        "title": "StreamShield: A Production-Proven Resiliency Solution for Apache Flink at ByteDance",
+        "recommendation": 3,
+        "authors": "Yong Fang, Yuxing Han, Meng Wang, Yifan Zhang, Yue Ma, Chi Zhang",
+        "affiliation": "ByteDance",
+        "abstract": "大规模流处理集群面临硬件故障与复杂外部依赖时，常导致作业频繁重启。面对这一挑战，该研究提出了StreamShield弹性恢复方案。在架构底层，该系统包含两大核心机制：1）运行期优化机制：引入反压洗牌策略与动态并行度调节，平衡数据分布并优化资源占用；2）细粒度容错机制：利用区域检查点隔离局部故障，配合单任务恢复减少算子干扰，以此缩短恢复耗时。进一步地，该系统已在ByteDance生产环境中落地验证。在Nexmark测试集与数据同步场景下，它将大规模资源分配开销降低了50%以上，并将检查点成功率提升至93.5%，保障了业务稳定性。",
+        "link": "https://arxiv.org/pdf/2602.03189",
+        "tags": ["distributed stream processing", "resiliency", "runtime optimization", "replication strategy", "high availability"]
+    },
+    {
+        "id": 4,
+        "title": "Building an OceanBase-based Distributed Nearly Real-time Analytical Processing Database System",
+        "recommendation": 5,
+        "authors": "Quanqing Xu, Chuanhui Yang, Ruijie Li, Dongdong Xie, Hui Cao, Yi Xiao, Junquan Chen, Yanzuo Wang, Saitong Zhao, Fusheng Han",
+        "affiliation": "OceanBase, Ant Group",
+        "abstract": "传统系统存在数据冗余与低效瓶颈 。面对挑战，该研究提出分布式数据库OceanBase Mercury 。其底层创新为：1）混合存储：基线数据列存且增量数据行存以保障事务性能 ；2）跳跃索引：融入SSTable结构以实现多分辨率动态剪裁 ；3）向量化引擎：通过三种数据格式优化算子并降低开销 。测试表明，该系统在TPC-H与ClickBench中查询延迟较低 ，目前已在公有云落地 。（开源链接：[https://github.com/oceanbase/oceanbase/tree/4.3.3](https://github.com/oceanbase/oceanbase/tree/4.3.3)）",
+        "link": "https://arxiv.org/pdf/2602.07584",
+        "tags": ["HTAP", "OLAP", "hybrid storage", "materialized views", "vectorized engine", "distributed database"]
+    },
+    {
+        "id": 5,
+        "title": "High-Fidelity and Complex Test Data Generation for Google SQL Code Generation Services",
+        "recommendation": 5,
+        "authors": "Yeounoh Chung, Shivasankari Kannan, Amita Gondi, Tristan Swadell, Fatma Ozcan",
+        "affiliation": "Google",
+        "abstract": "工业级SQL代码生成服务受限于数据隐私 ，传统方法难以为深层嵌套结构构建具语义相干性的测试数据 。为此，该研究提出基于大模型的冷启动测试数据生成流水线 。在架构底层，该系统包含三大核心机制：1）预处理解耦机制：解析SQL并提取谓词约束 ，将复杂查询分解为单表原子目标以实现并行生成 ；2）后处理重写机制：通过直接值替换同步跨表连接键 ，在不增加模型调用开销的前提下确保多表连接一致性 ；3）双阶段验证机制：结合静态解析与大模型裁判进行语义合规检查及错误重试 。该方法在Google Ads生产表与DeepJSONEval基准测试中进行了落地验证 ，使NL2SQL测试覆盖率提升69.59%，准确率提升20.4% 。",
+        "link": "https://arxiv.org/pdf/2504.17203",
+        "tags": ["large language models", "synthetic data generation", "SQL code generation", "nested data structures"]
+    },
+    {
+        "id": 10,
+        "title": "REVISION: Reflective Intent Mining and Online Reasoning Auxiliary for E-commerce Visual Search System Optimization",
+        "recommendation": 3,
+        "authors": "Yiwen Tang, Qiuyu Zhao, Zenghui Sun, Jinsong Lan, Xiaoyong Zhu, Bo Zheng",
+        "affiliation": "Shanghai AI Laboratory, Alibaba",
+        "abstract": "传统电商图像搜索因难以挖掘隐式意图，常导致无点击与意图错配。面对这一挑战，该研究提出REVISION框架，打破了传统图像硬匹配的局限。在架构底层，系统包含两大核心机制：1）离线挖掘机制，定期从历史无点击日志中推理意图并生成信号，通过层次聚类扩充工具链，解决了海量日志难以挖掘的瓶颈；2）在线推理机制，训练模型实时分析图像与历史结果，动态调度工具链进行自适应优化，缓解了请求意图的歧义。目前该系统已在淘宝落地验证。在线测试表明，在触发子集中，系统将无点击率降低13.91%，同时点击率与GMV均提升10.73%。",
+        "link": "https://arxiv.org/pdf/2510.22739",
+        "tags": ["Large Model", "Intent Mining", "Visual Search System"]
+    },
+    {
+        "id": 11,
+        "title": "DBdoctor: A Fine-grained and Non-intrusive Performance Diagnosis Platform for Databases",
+        "recommendation": 5,
+        "authors": "Xinyue Shi,  Quanqi Xin, Zhengjin Wang, Xinyi Zhang, Haoqiong Bian, Wei Lu, Qiyu Zhuang, Shuang Liu, Jikuan Zhang, Xiang Zheng, Yunpeng Chai, Xiaoyong Du",
+        "affiliation": "Renmin University of China, Juhaokan Technology",
+        "abstract": "在数据库性能诊断中，传统监控常陷于“低开销与高精度”两难，且缺失内部执行上下文使问题定位往往沦为黑盒。为此，本文创新性地提出了一种细粒度、非侵入式的白盒诊断平台。该研究巧妙借助eBPF技术，在系统内核与数据库层进行事件驱动的精准采集，并凭自适应探针将运行开销降至极低。其核心架构突破在于，能把海量的底层eBPF事件无缝重构为SQL级时序资源指标与依赖图谱，彻底打通了从SQL执行计划解释到硬件资源消耗的追踪链路。这不仅在实际生产环境中实现了异常根因SQL的高效精准捕获，更为现代数据库底层的智能化运维与性能调优提供了极具工业落地价值的新范式。",
+        "link": "https://mp.weixin.qq.com/s/jKMxXGyFAVwbd6RRXpYlnA",
+        "tags": ["DBdoctor", "eBPF", "RootCauseAnalysis"]
+    },  
+    
+    {
+        "id": 12,
+        "title": "CCD–Level and Load-Aware Thread Orchestration for In-Memory Vector ANNS on Multi-Core CPUs",
+        "recommendation": 4,
+        "authors": "Yuchen Huang, Baiteng Ma, Yiping Sun, Yang Shi, Xiao Chen, Xiaocheng Zhong, Zhiyong Wang, Yao Hu, Chuliang Weng",
+        "affiliation": "East China Normal University, Xiaohongshu Inc",
+        "abstract": "多核CCD架构下，内存向量检索常因忽视芯片列特性导致L3缓存污染与负载失衡。**为此**，该研究提出CCD级负载感知线程编排框架。**在架构底层**，该框架包含三大机制：**1)统一接口**：抽象跨查询HNSW与查询内IVF，降低迁移成本；**2)感知调度**：冷热配对映射流量至特定CCD，提高缓存利用率；**3)拓扑窃取**：优先进行同CCD内任务窃取，减少跨芯片列搬移引起的缓存失效。**进一步地**，该框架在小红书搜索与推荐等业务中落地，使吞吐量提升至多3.7倍，延迟降低30%至90%，目前在线上稳定运行。",
+        "link": "https://arxiv.org/pdf/2605.10090",
+        "tags": ["Multi-core architecture", "Vector search", "Thread orchestration"]
+    },
+    
+    {
+        "id": 14,
+        "title": "Graph Query Generation with Constraint-guided Large Language Agents",
+        "recommendation": 3,
+        "authors": "Mengying Wang, Nicolaas Jedema, Rahul Pandey, RaviKiran Krishnan, Jens Lehmann, Yinghui Wu",
+        "affiliation": "Case Western Reserve University, Amazon, Meta",
+        "abstract": "现有的知识图谱问答架构面临图模型与查询语言锁定的局限 。为此，该研究提出了免训练、无模式的统一图查询生成框架UniQGen 。在架构底层，该框架包含两大核心机制 ：1）不确定性约束表构建机制，动态提取上下文事实并量化评分，解决了模式错配与意图对齐问题 ；2）双向追溯循环优化机制，通过自顶向下松弛约束保障完备性 ，再自底向上收紧约束以实现语义准确与极简化 。相比之下，该设计有效解耦了对特定图模式的依赖 。评测表明，该框架在GraphQ和GrailQA基准测试中分别取得31.6%和4.9%的F1值提升 ，并在Amazon Neptune环境下验证了高并发扩展性 。",
+        "link": "https://arxiv.org/pdf/2605.00845",
+        "tags": ["query generation", "knowledge graph", "question answering", "large language agents"]
+    },
 
     {
-    "id": 177,
-    "title": "PAT: Towards Transaction Routing with Page Affinity in Shared-Cache Databases",
-    "recommendation": 4,
-    "authors": "Zhongqin Tan* (Northeastern University), Haoyuan Zhang (Northeastern University), Yanfeng Zhang (Northeastern University), Zeshun Peng (Northeastern University), Weixing Zhou (Northeastern University), Jinyu Zhang (Huawei Company), Yang Ren (Huawei Company), Guoliang Li (Tsinghua University), Ge Yu (Northeastern University)",
-    "affiliation": "东北大学,华为",
-    "abstract": "提出页面亲和性事务路由算法，优化共享缓存架构下分布式事务分发，提升资源利用率与事务处理性能",
-    "link": "",
-    "tags": [
-      ""
-    ]
-  },
-   
-    {
-    "id": 180,
-    "title": "Nezha: A Key-Value Separated Distributed Store with Optimized Raft Integration",
-    "recommendation": 3,
-    "authors": "Yangyang Wang, Yucong Dong, Ziqian Cheng, Zichen Xu",
-    "affiliation": "Nanchang University（南昌大学）",
-    "abstract": "该论文提出 Nezha，一个键值分离并优化 Raft 集成的分布式 KV 存储系统。Raft 共识协议与 LSM-tree 存储引擎结合时，一次写入通常需要 Raft log、LSM WAL 和 Memtable 持久化等多次磁盘写，造成显著 I/O 开销。Nezha 通过 KVS-Raft 将 key-value separation 与 Raft 有机结合，在保持 Raft 安全性的同时降低写放大；同时设计 Raft-aware garbage collection 平衡读性能，并使用三阶段请求处理机制保证优化过程中的读写正确性。实验表明，相比传统 Raft-based KV 存储，Nezha 在 put、get 和 scan 操作上的平均吞吐分别提升 460.2%、12.5% 和 72.6%。",
-    "link": "https://arxiv.org/pdf/2603.09122",
-    "tags": [
-      "分布式 KV",
-      "键值分离",
-      "Raft",
-      "存储系统",
-      "LSM"
-    ]
-  },
- 
+        "id": 18,
+        "title": "KScaNN: Scalable Approximate Nearest Neighbor Search on Kunpeng",
+        "recommendation": 3,
+        "authors": "Oleg Senkevich, Siyang Xu, Tianyi Jiang, Alexander Radionov, Jan Tabaszewski, Dmitriy Malyshev, Zijian Li, Daihao Xue, Licheng Yu, Weidi Zeng, Meiling Wang, Xin Yao, Siyu Huang, Gleb Neshchetkin, Qiuling Pan, Yaoyao Fu",
+        "affiliation": "Huawei Technologies Ltd, Higher School of Economics",
+        "abstract": "将x86下的最近邻搜索算法直接移植到ARM平台常面临性能劣化 。为此，该研究提出基于鲲鹏920软硬件协同设计的算法KScaNN 。在架构底层，该研究引入三项创新：1）自适应模块，利用机器学习动态预测探测深度与候选池大小以规避计算冗余 ；2）定制SIMD内核，重构数据布局并拼接寄存器优化NEON与SVE指令以加速距离计算 ；3）混合簇内搜索，在叶节点集成图索引以平衡图遍历与全扫描 。在GIST、DEEP10M等数据集下的评测表明，该算法相比顶配x86基线取得1.06至1.63倍的吞吐量提升 ，目前已在通用ARM生态中完成验证 。",
+        "link": "https://arxiv.org/pdf/2511.03298",
+        "tags": ["vector retrieval", "ARM architecture", "approximate nearest neighbor search"]
+    },
   {
-    "id": 189,
-    "title": "SQLMorph: Query Mutation and Fine-Grained Metrics for Text-to-SQL Evaluation [Experiment, Analysis, and Benchmark]",
-    "recommendation": 4,
-    "authors": "Mohammadhossein Malekpour, Mohamed Riahi, Maxime Lamothe, Amine Mhedhbi",
-    "affiliation": "Polytechnique Montréal（蒙特利尔理工学院）",
-    "abstract": "该论文提出 SQLMorph，用查询变异和细粒度指标改进 Text-to-SQL 评估。现有公开基准往往过于静态，难以覆盖企业复杂模式和多表连接；传统 Execution Accuracy 又只能给出二元结果，无法分析部分正确。SQLMorph 包含 Join Query Expansion，通过合法 join 扩展增加 SQL 结构复杂度；Textual Query Augmentation 生成受控自然语言扰动以测试鲁棒性。此外，论文提出 Execution Precision、Execution Recall 及 F1 等执行级指标，用于诊断过预测和欠预测。实验显示，JQE 能扩大查询覆盖并暴露连接复杂度带来的准确率下降，TQA 可揭示自然语言扰动导致的系统脆弱性。",
-    "link": "https://amine.io/papers/2026-icde-sqlmorph.pdf",
-    "tags": [
-      "Text-to-SQL",
-      "查询变异",
-      "评估指标",
-      "Benchmark",
-      "SQL"
-    ]
-  },
-  
-   {
-    "id": 190,
-    "title": "Telescope: A Learned What-If Call for Column Store Selection in HTAP Databases",
-    "recommendation": 5,
-    "authors": "",
-    "affiliation": "",
-    "abstract": "",
-    "link": "",
-    "tags": [
-      "",
-      "",
-      ""
-    ]
-  },  
-  
-
+        "id": 27,
+        "title": "OpenZL: Using Graphs to Compress Smaller and Faster",
+        "recommendation": 4,
+        "authors": "Yann Collet, Nick Terrell, Winston Felix Handte, Danielle Rozenblit, Victor Zhang, Kevin Zhang, Yaelle Goldschlag, Jennifer Lee, Elliot Gorokhovsky, Yonatan Komornik, Daniel Riegel, Stan Angelov, Nadav Rotem",
+        "affiliation": "Meta",
+        "abstract": "在过去几十年中，研究技术通过显著增加处理时间来提高无损压缩率。然而，这些技术在工业界并未普及，因为生产系统需要高吞吐量和低资源利用率。相反，现实中压缩技术的改进越来越多地通过构建应用特定的压缩器来实现，这些压缩器可以利用被压缩数据的结构和语义知识。应用特定压缩器系统的性能甚至优于最好的通用压缩器，但这些技术存在严重缺陷——适用性有限、开发困难、维护和部署也具有挑战性。本文提出了一种新的压缩策略来克服这些问题。提出了压缩的图模型（graph model），一种将压缩表示为模块化编解码器有向无环图的新理论框架。OpenZL 实现了该框架，将数据压缩为自描述的线格式，任何配置都可以通过通用解码器进行解压。OpenZL 的设计使得开发者可以用最少的代码快速开发应用特定压缩器。实验结果表明，OpenZL 在多种真实世界数据集上，与最先进的通用压缩器相比，实现了更优的压缩率和速度。与专注于压缩率的深度学习压缩器相比，OpenZL 在压缩率上具有竞争力，同时速度快了数个数量级。在 Meta 的内部部署中，也显示出在大小和/或速度方面的一致性改进，开发时间从数月缩短到数天。OpenZL 开源链接：https://github.com/facebook/openzl",
+        "link": "https://arxiv.org/pdf/2605.09928",
+        "tags": ["数据压缩", "数据模型", "数据库管理", "异构数据库", "训练"]
+  }, 
   {
-    "id": 193,
-    "title": "BEACON: A Benchmark for Efficient and Accurate Counting of Subgraphs [Experiment, Analysis, and Benchmark]",
-    "recommendation": 5,
-    "authors": "Xiangju Zhu, Mohammad Matin Najafi, Chrysanthi Kosyfaki, Xiaodong Li, Reynold Cheng, Laks Lakshmanan",
-    "affiliation": "The University of Hong Kong（香港大学）, Huawei Hong Kong Research Center（华为香港研究中心）, The Hong Kong University of Science and Technology（香港科技大学）, Xiamen University（厦门大学）, University of British Columbia（英属哥伦比亚大学）",
-    "abstract": "该论文提出 BEACON，用于高效准确子图计数的综合基准。子图计数在金融网络、交通系统和生物网络等场景中重要，但算法式方法和机器学习方法之间缺少统一、公平、可复现的评测。BEACON 提供标准化数据集、验证过的 ground truth、集成评测环境和公开 leaderboard。实验显示，算法式方法在超大图上计数效率高，但难以处理超过 6 个节点的复杂模式；机器学习方法可处理更大模式，但需要大量图数据且在小而密的图上准确率不足。该基准统一了不同技术路线的评估口径，并揭示了子图计数算法在效率、模式复杂度和准确率之间的取舍。",
-    "link": "https://arxiv.org/pdf/2504.10948",
-    "tags": [
-      "子图计数",
-      "Benchmark",
-      "图分析",
-      "算法评测",
-      "机器学习方法"
-    ]
+        "id": 35,
+        "title": "DM-RAG: Enhancing User Support in Dameng Databases with Retrieval-Augmented Generation",
+        "recommendation": 5,
+        "authors": "Qiang Huang, Ke Liu, Liang Deng, Sijing Zhang, Chuang Hu, Tieyun Qian, Xiao Yan, Jiawei Jiang",
+        "affiliation": "Wuhan University（武汉大学）, Wuhan Dameng Database Co., Ltd（武汉达梦数据库有限公司）",
+        "abstract": "检索增强生成（RAG）通过检索相关的、最新的事实信息并将其融入生成过程，整合外部知识库以缓解大语言模型（LLM）的幻觉问题。然而，由于数据库文档具有层次化、元数据丰富的特点，且用户查询往往模糊、面向专家级数据库知识，将 RAG 适配到数据库系统仍面临挑战。本文提出了 DM-RAG，一种专为达梦数据库系统定制的 RAG 框架，用于辅助数据库管理任务。首先，DM-RAG 采用基于元信息的层次化分块策略，以保持结构完整性和上下文连贯性。其次，利用领域特定的微调和轻量级基于词表的查询改写，将模糊查询与专家知识对齐。最后，检索流水线结合元信息驱动的排序验证来优化检索结果，并将层次化索引与上下文增强相结合，在保持上下文完整性的同时提高答案准确性。实验表明，DM-RAG 超越了强 RAG 基线方法，在多个评估指标上生成质量平均提升达 14.31%。用户研究报告满意度评分为 3.55/4，用户偏好率为 81.80%，问题解决效率提升 5.20 倍。达梦语料库公开链接：https://github.com/johnnyhuangcs/Dameng_Corpus。",
+        "link": "",
+        "tags": ["检索增强生成", "数据库管理系统", "数据库系统"]
   },
   {
-    "id": 194,
-    "title": "XRAG: eXamining the Core - Benchmarking Foundational Components in Advanced Retrieval-Augmented Generation [Experiment, Analysis, and Benchmark]",
-    "recommendation": 4,
-    "authors": "Qili Zhang, Qianren Mao, Yangyifei Luo, Yashuo Luo, Hanwen Hao, Zhilong Cao, Weifeng Jiang, Zhijun Chen, Junnan Liu, Feng Yan, Xiaolong Wang, Jinlong Zhang, Zhenting Huang, Zhixing Tan, Jie Sun, Bo Li, Jianxin Li, Philip Yu",
-    "affiliation": "Beihang University（北京航空航天大学）, Zhongguancun Laboratory（中关村实验室）, Nanyang Technological University（南洋理工大学）, University of Illinois Chicago（伊利诺伊大学芝加哥分校）",
-    "abstract": "该论文提出 XRAG，一个开源模块化基准，用于评测高级 RAG 系统的核心组件。XRAG 将 RAG 流水线划分为 pre-retrieval、retrieval、post-retrieval 和 generation 四个阶段，系统评估不同组件在重构数据集上的效果，并关注复杂 RAG 系统中的失败点。论文设计实验方法和诊断协议，分析检索、重排、压缩、生成等模块对最终答案质量的影响，并给出针对常见失败模式的优化建议。XRAG 支持统一数据格式、模块化评估和公平组件比较，为 advanced RAG 系统构建提供了可复现的基准和工程诊断工具。",
-    "link": "https://arxiv.org/pdf/2412.15529",
-    "tags": [
-      "RAG",
-      "Benchmark",
-      "检索增强生成",
-      "模块化评估",
-      "LLM"
-    ]
-  },
-
-  {
-    "id": 201,
-    "title": "SINDI: An Efficient Index for Sparse Vector Approximate Maximum Inner Product Search",
-    "recommendation": 5,
-    "authors": "Ruoxuan Li, Xiaoyao Zhong, Jiabao Jin, Peng Cheng, Wangze Ni, Zhitao Shen, Wei Jia, Xiangyu Wang, Heng Tao Shen, Jingkuan Song",
-    "affiliation": "East China Normal University（华东师范大学）, Ant Group（蚂蚁集团）, Tongji University（同济大学）, Zhejiang University（浙江大学）",
-    "abstract": "该论文提出 SINDI，一个面向稀疏向量近似最大内积搜索的高效索引。稀疏向量 MIPS 对 RAG 的多路检索很重要，但现有倒排或图方法在生产环境中受冗余距离计算、随机内存访问和稀疏格式难以 SIMD 加速影响。SINDI 包含三项优化：利用 SIMD 并消除冗余 ID 查找进行批量内积计算；将对原始向量的随机访问转为对倒排列表的顺序访问以降低内存延迟；保留高价值非零项进行向量剪枝。多个真实数据集实验显示，在 Recall@50 超过 99% 时，SINDI 在 MS MARCO 上相对 SEISMIC 和 PyANNS 获得 4.2 到 26.4 倍单线程 QPS 提升，并已集成到蚂蚁开源向量搜索库 VSAG。",
-    "link": "https://arxiv.org/pdf/2509.08395",
-    "tags": [
-      "稀疏向量",
-      "MIPS",
-      "向量检索",
-      "RAG",
-      "SIMD",
-      "VSAG"
-    ]
-  },
-  
-  
-  {
-    "id": 205,
-    "title": "",
-    "recommendation": 4,
-    "authors": "",
-    "affiliation": "",
-    "abstract": "",
-    "link": "https:/",
-    "tags": [
-    ]
-  },
-  
-  {
-    "id": 206,
-    "title": "",
-    "recommendation": 4,
-    "authors": "",
-    "affiliation": "",
-    "abstract": "",
-    "link": "https:/",
-    "tags": [
-
-    ]
-  },
- 
-  {
-    "id": 211,
-    "title": "TS3D: A Temporal Multimodal Dataset for Distributed Database System Analysis [Experiment, Analysis, and Benchmark]",
-    "recommendation": "3",
-    "authors": "Yuanyuan Yao, Yuhan Shi, Yian Wei, Lu Chen, Mourad Khayati, Cheng Long, Tianyi Li",
-    "affiliation": "Zhejiang University, University of Fribourg, Nanyang Technological University, Aalborg University",
-    "abstract": "分布式数据库已成为各行各业的基础设施。然而，由于严格的数据隐私和安全法规，从业人员往往难以获取真实的运行数据，限制了分析的可靠性。虽然目前有一些公开的分布式数据库日志数据集，但仅依赖它们进行下游任务仍会遇到性能瓶颈。主要局限在于这些数据集通常只提供文本日志或时间值，很少两者兼备，这使得全面理解系统行为变得困难。利用分布式数据库中固有的多模态信息可以极大地提高下游分析的准确性。开源链接：https://github.com/Yian-Wei/TS3D",
-    "link": "https://mkhayati.github.io/assets/pdf/26_ts3d_icde.pdf",
-    "tags": ["Temporal Data", "Multimodal Dataset", "Distributed Database", "Benchmarking"]
-  },
- 
-  {
-    "id": 213,
-    "title": "LLMIA: An Out-of-the-Box Index Advisor via In-Context Learning with LLMs",
-    "recommendation": "4",
-    "authors": "Xinxin Zhao, Xinmei Huang, Haoyang Li, Jing Zhang, Shuai Wang, Tieying Zhang, Jianjun Chen, Rui Shi, Cuiping Li, Hong Chen",
-    "affiliation": "Renmin University of China, ByteDance",
-    "abstract": "索引推荐对于优化数据库性能至关重要。然而，现有的基于启发式和学习的方法往往依赖于低效的穷举搜索和估计成本，导致效率低下且实际延迟不尽如人意。受经验丰富的 DBA 精细化策略的启发，我们提出了 LLMIA，这是一款开箱即用的、无需调优的索引推荐器，通过上下文学习利用大语言模型（LLM）进行索引推荐。LLMIA 使用高质量演示池和全面的工作负载特征提取将数据库专业知识注入 LLM，同时迭代地合并数据库反馈以指导索引精细化。这种设计使 LLMIA 能够模拟专家 DBA 的决策过程，在多项基准测试中性能优于或匹配 12 个基准线。开源链接：https://github.com/XinxinZhao798/LLMIndexAdvisor",
-    "link": "https://arxiv.org/pdf/2503.07884",
-    "tags": ["Large Language Models", "Index Advisor", "In-Context Learning"]
+        "id": 36,
+        "title": "Relevance Matters: A Multi-Task and Multi-Stage Large Language Model Approach for E-commerce Query Rewriting",
+        "recommendation": 4,
+        "authors": "Aijun Dai, Jixiang Zhang, Haiqing Hu, Guoyu Tang, Lin Liu, Ziguang Cheng",
+        "affiliation": "Jingdong（京东）, Tsinghua University（清华大学）",
+        "abstract": "在电商搜索中，用户体验通过用户对返回商品的行为反应（如点击率和转化率）以及返回商品与搜索查询之间的相关性来衡量。因此，相关性和用户转化构成了查询改写（query rewriting）的两个主要目标，查询改写是一种弥合用户表达与商品描述之间词汇差距的策略。本文提出了一种基于大语言模型（LLM）的多任务多阶段查询改写框架。与以往主要关注改写查询生成的工作不同，本文将相关性任务注入查询改写中。具体而言，利用在京东用户数据和商品信息上预训练的模型，该方法首先进行多任务监督微调（SFT），包括改写查询生成任务和查询与改写之间的相关性标注任务。随后，采用组相对策略优化（GRPO）进行模型的目标对齐，以增强相关性并促进用户转化。通过离线评估和在线 A/B 测试，该框架在电商查询改写效果方面展现了显著提升，提高了搜索结果的相关性并增加了每用户购买数（UCVR）。自 2025 年 8 月起，该方法已部署在京东这一中国领先在线购物平台上。",
+        "link": "https://arxiv.org/pdf/2603.02555",
+        "tags": ["查询改写", "电商搜索", "大语言模型"]
   },
   {
-    "id": 214,
-    "title": "Approximate Diverse k-nearest Neighbor Search in Vector Database",
-    "recommendation": "4",
-    "authors": "Jiachen ZHAO, Xiao Yan, Eric Lo",
-    "affiliation": "Chinese University of Hong Kong, Wuhan University",
-    "abstract": "近似 k 近邻搜索（Ak-NNS）是向量数据库中的核心操作，支撑着检索增强生成（RAG）和图像检索等应用。在这些场景中，用户通常更喜欢多样化的结果集以减少冗余并增强信息价值。然而，现有的基于贪心的多样化方法经常产生次优结果，无法充分接近最佳相似度分数。本文提出了一种新颖的方法，将结果多样化无缝集成到最先进的 Ak-NNS 方法中，通过渐进式搜索框架高效地逼近最优多样化结果集。开源链接：https://github.com/DGENJI/Progressive-Search",
-    "link": "https://arxiv.org/pdf/2510.27243",
-    "tags": ["Vector Database", "k-NN Search", "Search Diversity"]
-  },
-  {
-    "id": 217,
-    "title": "A Set-Theoretic Approach to Detecting Logic Bugs in DBMS Inner Join Optimizations",
-    "recommendation": "5",
-    "authors": "Ce Lyu, Changzheng Wei, Yanhao Wang, Jie Liang, Li Lin, Hanghang Wu, Minghao Zhao, Ying Yan, Aoying Zhou",
-    "affiliation": "East China Normal University, Ant Group, Beihang University",
-    "abstract": "基于生成的测试技术在检测 DBMS 逻辑漏洞方面显示出有效性，这些漏洞通常由查询优化器的不当实现引起。然而，现有的调试工具多局限于单表查询，涉及连接操作的多表查询方面存在研究空白。本文提出了 TQS，这是一个旨在检测多表连接查询所产生的逻辑漏洞的测试框架。TQS 通过数据引导的模式和查询生成 (DSG) 以及知识引导的查询空间探索实现其目标。DSG 采用数据库规范化技术生成测试模式，并使用位图索引进行结果跟踪。",
-    "link": "https://arxiv.org/pdf/2602.21955",
-    "tags": ["DBMS Testing", "Logic Bugs", "Join Optimization"]
-  },
- 
-  {
-    "id": 219,
-    "title": "Accelerating Metadata Management of DFS via Speculative Permission Checking",
-    "recommendation": "4",
-    "authors": "Yiduo Wang, Linghang Meng, Liang Li, Jie Wu",
-    "affiliation": "China Telecom Cloud Computing Research Institute",
-    "abstract": "现代分布式文件系统面临关键的元数据瓶颈。传统的元数据管理在路径解析上开销巨大：每次操作都需要 O(N) 的 RPC 调用和数据库查询。本文通过研究现实世界的命名空间结构，发现了权限递减模式。我们利用这一见解设计了 SPMeta，它集成了推测性权限检查（在保留 POSIX 语义的同时绕过昂贵的检查）和 MART（一种元数据优化的字典树结构）。SPMeta 将大多数元数据操作的开销从 O(N) 降低到 O(1)，显著提高了系统吞吐量。",
-    "link": "https://cis.temple.edu/~jiewu/research/publications/Publication_files/ICDE2026-SpeculativePermissionChecking.pdf",
-    "tags": ["Distributed File System", "Metadata Management", "Permission Checking"]
-  },
-  {
-    "id": 225,
-    "title": "Resystance: Unleashing Hidden Performance of Compaction in LSM-trees via eBPF",
-    "recommendation": "3",
-    "authors": "Hongsu Byun, Seungjae Lee, Honghyoen Yoo, MyoungJoon Kim, Sungyong Park",
-    "affiliation": "Sogang University",
-    "abstract": "随着高速存储设备的发展，主要的 I/O 瓶颈已从硬件转移到软件。现代数据库系统依赖内核 I/O 路径，频繁的系统调用和上下文切换导致了显著开销，在基于 LSM 树的数据库中尤为明显。我们发现后台压缩过程产生了大量读取系统调用。为此，我们提出了 RESYSTANCE，利用 eBPF 和 io_uring 将核心 I/O 例程迁移到内核中，在不修改 LSM 树结构或算法的情况下，消除不必要的系统调用并减少软件栈开销。实验显示其将压缩时间缩短了 50%。",
-    "link": "https://arxiv.org/pdf/2603.05162",
-    "tags": ["LSM-trees", "eBPF", "Storage Performance"]
-  },
-  {
-    "id": 228,
-    "title": "HCT-QA: A Benchmark for Question Answering on Human-Centric Tables [Experiment, Analysis, and Benchmark]",
-    "recommendation": "5",
-    "authors": "Mohammad Shahmeer Ahmad, Zan Naeem, Michael Aupetit, Ahmed Elmagarmid, Mohamed Eltabakh, Xiaosong Ma, Mourad Ouzzani, Chaoyi Ruan, Hani Al-Sayeh",
-    "affiliation": "QCRI, HBKU, MBZUAI, National University of Singapore",
-    "abstract": "嵌入在 PDF 和网页中的以人为本表格（HCT）信息密集且布局复杂，使得传统的 SQL 方式难以查询。为了解决缺乏标准评估基准的问题，我们提出了 HCT-QA 问答基准，包含数千张真实世界和合成的表格以及数万个自然语言问答对。我们评估了 25 种 LLM 和 9 种 VLM 在该基准上的表现，结果表明即使是最先进的模型在处理复杂结构时仍面临挑战。此外，实验证明微调可显著提升模型的 F1 分数。开源链接：https://github.com/qcri/HCTQA-Benchmark/",
-    "link": "https://arxiv.org/pdf/2504.20047",
-    "tags": ["Table QA", "Benchmarking", "Data Management"]
-  },
-  {
-    "id": 229,
-    "title": "MM2SQL: A Benchmark and Method for Visually-Grounded SQL Generation",
-    "recommendation": "3",
-    "authors": "Shengze Shi, Tao Ren, Li Qi, Tingrui Yang, Wei Xiong, Jun Hu",
-    "affiliation": "Institute of Software Chinese Academy of Sciences, University of Chinese Academy of Sciences",
-    "abstract": "",
-    "link": "",
-    "tags": ["SQL Generation", "Multimodal", "Benchmarking"]
-  },
-  
- 
-  {
-    "id": 232,
-    "title": "Lequa: A Learning-Based Query-Aware Framework for Selective Query Optimization",
-    "recommendation": "4",
-    "authors": "Guoneng Li, Pengfei Zheng, Ling Xu, Yan Li, Bolong Zheng",
-    "affiliation": "Huazhong University of Science and Technology, Shuyi Tech., Wuhan University of Technology",
-    "abstract": "开源链接：https://github.com/Hustsurvivor/Lequa",
-    "link": "",
-    "tags": ["Query Optimization", "Machine Learning"]
-  },
-  {
-    "id": 234,
-    "title": "LLMSQLMUTATOR: LLM-Powered Test Case Generation for Database Using Bug Reports",
-    "recommendation": "4",
-    "authors": "Chenglin Tian, Chaofan Li, Yawen Li, Yingxia Shao",
-    "affiliation": "Beijing University of Posts and Telecommunications",
-    "abstract": "",
-    "link": "",
-    "tags": ["Database Testing", "LLM", "Bug Reports"]
-  },
-  {
-    "id": 237,
-    "title": "Efficient Query Rewrite Rule Discovery via Standardized Enumeration and Learning-to-Rank",
-    "recommendation": "5",
-    "authors": "Yuan Zhang, Yuxing Chen, Yuekun Yu, Jinbin Huang, Rui Mao, Anqun Pan, Lixiong Zheng, Jianbin Qin",
-    "affiliation": "Shenzhen Institute of Computing Science, Shenzhen University, Tencent Inc.",
-    "abstract": "查询重写对于数据库性能优化至关重要，但现有的自动规则枚举方法在处理复杂查询计划时面临指数级搜索空间和严重冗余。我们提出了 SLER，这是一个结合标准化模板枚举与排序学习（learning-to-rank）方法的高效重写规则发现系统。SLER 使用标准化模板（保留操作符结构但移除具体数据细节）来消除结构冗余并大幅缩小搜索空间。排序学习模型通过预过滤最有希望的模板对来指导枚举，从而实现了针对大型模板的规则生成扩展性。",
-    "link": "https://arxiv.org/pdf/2603.04169",
-    "tags": ["Query Rewriting", "Rule Discovery", "Learning-to-Rank"]
-  },
-  {
-    "id": 238,
-    "title": "Text2SQL-Flow: A Robust SQL-Aware Data Augmentation Framework for Text-to-SQL",
-    "recommendation": "5",
-    "authors": "Qifeng Cai, Hao Liang, Chang Xu, Tao Xie, Wentao Zhang, Bin Cui",
-    "affiliation": "Peking University",
-    "abstract": "以数据为中心的范式已成为人工智能的关键方向。在 Text-to-SQL 任务中，数据集的稀缺、多样性不足和结构简单限制了模型性能。为此，我们提出了 TEXT2SQL-FLOW，这是一个 SQL 感知的增强框架，能够从有限的种子数据系统地生成大规模、语义有效且结构多样的 Text-to-SQL 对。基于该框架，我们构建了包含 75,386 个标注示例的高质量数据集 SQLFLOW。实验表明，fine-tuning 或结合该数据的检索策略能显著增强 LLM 的解题能力。开源链接：https://github.com/TechNomad-ds/Text2SQL-Flow",
-    "link": "https://arxiv.org/pdf/2511.10192",
-    "tags": ["Text-to-SQL", "Data Augmentation", "Query Interfaces"]
-  },
- 
-  {
-    "id": 241,
-    "title": "SQLVec: SQL-Based Vector Similarity Search",
-    "recommendation": "4",
-    "authors": "Zequn Zhang, Yuanyuan Zhu, Hao Zhang, Jeffrey Xu Yu",
-    "affiliation": "Wuhan University, The Chinese University of Hong Kong, Hong Kong University of Sciences and Technology (Guangzhou)",
-    "abstract": "",
-    "link": "",
-    "tags": ["Vector Search", "SQL Query Integration"]
-  },
-
- {
-    "id": 245,
-    "title": "",
-    "recommendation": "4",
-    "authors": "u",
-    "affiliation": "",
-    "abstract": "",
-    "link": "",
-    "tags": ["", ""]
-  },
-
-  {
-    "id": 250,
-    "title": "ARCADE: A Real-Time Data System for Hybrid and Continuous Query Processing across Diverse Data Modalities",
-    "recommendation": "4",
-    "authors": "Jingyi Yang, Songsong Mo, Jiachen Shi, Zihao Yu, Kunhao Shi, Xuchen Ding, Gao Cong",
-    "affiliation": "Nanyang Technological University",
-    "abstract": "多模态数据的爆炸式增长以及对实时语义搜索的需求超出了现有数据库系统的能力。将这些需求转化为向量嵌入上的查询，这对实时摄取和复杂执行提出了巨大挑战。本文提出了 ARCADE，一个支持向量、空间、文本和关系等多模态数据混合与连续查询处理的实时数据系统。ARCADE 设计了统一的磁盘二级索引框架，并引入了成本驱动型混合查询优化器。实验显示其在读密集型负载下具有显著优势。",
-    "link": "https://arxiv.org/pdf/2509.19757",
-    "tags": ["Real-Time Systems", "Continuous Query Processing"]
-  },
-  {
-    "id": 252,
-    "title": "Systematic Evaluation of Plan-based Adaptive Query Processing [Experiment, Analysis, and Benchmark]",
-    "recommendation": "4",
-    "authors": "Pei Mu, Anderson Chaves Carniel, Antonio Barbalace, Amir Shaikhha",
-    "affiliation": "University of Edinburgh, Huawei Technologies Research & Development (UK) Limited",
-    "abstract": "为了解决由于基数估计不准确导致的查询性能不佳问题，自适应查询处理（AQP）策略应运而生。本文通过实验和基准测试，系统地评估了基于计划的 AQP 策略。我们提供了一个统一的模块级表示来突出核心组件，并指导开发者在实现工作量与性能收益之间进行权衡。我们在 PostgreSQL 和 DuckDB 上实现了模块化设计，并研究了各 AQP 模块对性能的影响。开源链接：https://github.com/PeiMu/Reproducibility-Evaluating-Plan-based-Adaptive-Query-Processing/",
-    "link": "https://arxiv.org/pdf/2511.16455",
-    "tags": ["Adaptive Query Processing", "Benchmarking"]
-  },
-  
-{
-    "id": 260,
-    "title": "QPAD: Quantile-Preserving Approximate Dimension Reduction for Nearest Neighbors Preservation in High-Dimensional Vector Search",
-    "recommendation": "4",
-    "authors": "Jiuzhou Fu, Dongfang Zhao",
-    "affiliation": "University of Washington",
-    "abstract": "高维向量嵌入广泛用于检索系统，但常受到维度诅咒和运行慢的影响。降维（DR）很少应用，因为它倾向于扭曲对搜索至关重要的最近邻（NN）结构。我们提出了 QPAD（分位数保持近似降维），这是一种无监督方法，通过在软正交约束下最大化 k-NN 与非 k-NN 之间的间隔，显式保留近似 NN 关系。在五个领域的实验表明，QPAD 在保持邻域结构方面始终优于 11 种标准方法。",
-    "link": "https://arxiv.org/pdf/2504.16335v2",
-    "tags": ["Dimension Reduction", "Vector Search", "Nearest Neighbors"]
-  }
+        "id": 37,
+        "title": "Bala-Join: An Adaptive Hash Join for Balancing Communication and Computation in Geo-Distributed SQL Databases",
+        "recommendation": 4,
+        "authors": "Wenlong Song, Hui Li, Bingying Zhai, Jinxin Yang, Pinghui Wang, Luming Sun, Ming Li, Jiangtao Cui",
+        "affiliation": "Xidian University（西安电子科技大学）, Xi'an Jiaotong University（西安交通大学）, Yunxi Technology Company Ltd.（云希科技有限公司）, Shandong Inspur Database Technology Company Ltd.（山东浪潮数据库技术有限公司）",
+        "abstract": "无共享架构的地理分布式 SQL 数据库（如 CockroachDB）对于需要数据弹性和本地性的企业应用越来越重要。然而，在实际客户场景中，当部署跨越广域网（WAN）的多个数据中心时，出现了显著的性能下降。经排查发现，性能瓶颈在于分布式哈希连接（Dist-HJ）算法，其性能依赖于通信开销与计算负载之间的关键平衡。当处理来自真实客户负载的倾斜数据时，这种平衡被严重破坏，导致性能下降。为应对这一挑战，本文提出了 Bala-Join，一种自适应解决方案，用于平衡 Dist-HJ 执行中的计算和网络负载。该方法包含平衡分区与部分复制（BPPR）算法和分布式在线倾斜连接键检测器。前者通过组播机制实现倾斜数据的平衡重分布，以提升计算性能并降低网络开销；后者为 BPPR 提供实时的倾斜连接键信息。此外，还引入了主动信令与异步拉取（ASAP）机制，在检测器和重分布过程之间实现高效、实时的同步，且开销极低。实验研究表明，Bala-Join 优于主流的 Dist-HJ 方案，吞吐量提升 25%-61%。",
+        "link": "https://arxiv.org/pdf/2603.05405",
+        "tags": ["分布式哈希连接", "无共享架构", "数据倾斜"]
+  }    
 ]
